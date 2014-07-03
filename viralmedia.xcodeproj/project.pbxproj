@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2477D93585F440C38AAD0861 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 613D0F93FB374CC8BECDF9FC /* libPods.a */; };
+		C4542889196453F7000F53E8 /* run@2x.gif in Resources */ = {isa = PBXBuildFile; fileRef = C4542887196453F7000F53E8 /* run@2x.gif */; };
+		C454288A196453F7000F53E8 /* spinner_dropbox@2x.gif in Resources */ = {isa = PBXBuildFile; fileRef = C4542888196453F7000F53E8 /* spinner_dropbox@2x.gif */; };
 		C46A9A3F195D7AF100AD0F4A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C46A9A3E195D7AF100AD0F4A /* Foundation.framework */; };
 		C46A9A41195D7AF100AD0F4A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C46A9A40195D7AF100AD0F4A /* CoreGraphics.framework */; };
 		C46A9A43195D7AF100AD0F4A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C46A9A42195D7AF100AD0F4A /* UIKit.framework */; };
@@ -41,6 +43,8 @@
 /* Begin PBXFileReference section */
 		613D0F93FB374CC8BECDF9FC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F60936A068A4BA98AB7A105 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		C4542887196453F7000F53E8 /* run@2x.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "run@2x.gif"; sourceTree = "<group>"; };
+		C4542888196453F7000F53E8 /* spinner_dropbox@2x.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "spinner_dropbox@2x.gif"; sourceTree = "<group>"; };
 		C46A9A3B195D7AF100AD0F4A /* viralmedia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = viralmedia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C46A9A3E195D7AF100AD0F4A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C46A9A40195D7AF100AD0F4A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -152,6 +156,8 @@
 		C46A9A45195D7AF100AD0F4A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C4542887196453F7000F53E8 /* run@2x.gif */,
+				C4542888196453F7000F53E8 /* spinner_dropbox@2x.gif */,
 				C46A9A46195D7AF100AD0F4A /* viralmedia-Info.plist */,
 				C46A9A47195D7AF100AD0F4A /* InfoPlist.strings */,
 				C46A9A4A195D7AF100AD0F4A /* main.m */,
@@ -257,6 +263,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C46A9A57195D7AF100AD0F4A /* Images.xcassets in Resources */,
+				C4542889196453F7000F53E8 /* run@2x.gif in Resources */,
+				C454288A196453F7000F53E8 /* spinner_dropbox@2x.gif in Resources */,
 				C46A9A49195D7AF100AD0F4A /* InfoPlist.strings in Resources */,
 				C46A9A52195D7AF100AD0F4A /* Main.storyboard in Resources */,
 			);

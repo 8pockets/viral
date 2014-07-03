@@ -9,7 +9,7 @@
 #import "NewViewController.h"
 
 @interface NewViewController (){
-    //NSMutableArray *_items;
+    NSMutableArray *_items;
     //BlogItem *_item;
     //NSXMLParser *_parser;
     //NSString *_elementName;
@@ -31,14 +31,24 @@
     _transitions = [[METransitions alloc] init];
     return _transitions;
 }
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    __weak typeof(self) weakSelf =self;
+    [self.NewContent addPullToRefreshActionHandler:^{
+        [weakSelf startDownload];
+        
+    } ProgressImagesGifName:@"spinner_dropbox@2x.gif" LoadingImagesGifName:@"run@2x.gif" ProgressScrollThreshold:50 LoadingImageFrameRate:30];
+    
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.NewContent.delegate = self;
-    self.NewContent.dataSource = self;
+    //self.NewContent.delegate = self;
+    //self.NewContent.dataSource = self;
     
     //SlidingViewController
     NSDictionary *transitionData = self.transitions.all[0];
@@ -82,9 +92,38 @@
 }
 */
 
-/*
+
 - (void)startDownload
 {
+    __weak typeof(self) weakSelf = self;
+    self.isLoading =YES;
+    int64_t delayInSeconds = 2.2;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+        [weakSelf.NewContent beginUpdates];
+        //[weakSelf.pData insertObject:[NSDate date] atIndex:0];
+        //[weakSelf.NewContent insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationBottom];
+        
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        
+        [manager GET:@"http://153.121.33.54/viral/select-week.php"
+          parameters:nil
+             success:^(NSURLSessionDataTask *task, id responseObject) {
+                 // 通信に成功した場合の処理
+                 NSLog(@"responseObject: %@", responseObject);
+             } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                 // エラーの場合はエラーの内容をコンソールに出力する
+                 NSLog(@"Error: %@", error);
+             }];
+        [weakSelf.NewContent endUpdates];
+        
+        //Stop PullToRefresh Activity Animation
+        [weakSelf.NewContent stopRefreshAnimation];
+        weakSelf.isLoading =NO;
+        
+    });
+/*
     _items = [[NSMutableArray alloc] init];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://pipes.yahoo.com/pipes/pipe.run?_id=b26f6f0b13d2b747850bc3cad62bec63&_render=json"]];
     NSHTTPURLResponse *response = nil;
@@ -138,8 +177,9 @@
         [blogsave setObject:archivearray forKey:@"blogsave"];
         [blogsave synchronize];
     });
-}
 */
+}
+
 - (IBAction)menuButtonTapped:(id)sender {
     [self.slidingViewController anchorTopViewToRightAnimated:YES];
 }
