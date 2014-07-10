@@ -8,8 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		2477D93585F440C38AAD0861 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 613D0F93FB374CC8BECDF9FC /* libPods.a */; };
+		C445411D196EC0BE00ECE02F /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C445411C196EC0BE00ECE02F /* WebViewController.m */; };
 		C4542889196453F7000F53E8 /* run@2x.gif in Resources */ = {isa = PBXBuildFile; fileRef = C4542887196453F7000F53E8 /* run@2x.gif */; };
 		C454288A196453F7000F53E8 /* spinner_dropbox@2x.gif in Resources */ = {isa = PBXBuildFile; fileRef = C4542888196453F7000F53E8 /* spinner_dropbox@2x.gif */; };
+		C454288D19656B5E000F53E8 /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C454288C19656B5E000F53E8 /* CustomCell.m */; };
+		C454289119656BC2000F53E8 /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C454289019656BC2000F53E8 /* CustomCell.xib */; };
+		C454289719657CA0000F53E8 /* CustomCellItems.m in Sources */ = {isa = PBXBuildFile; fileRef = C454289619657CA0000F53E8 /* CustomCellItems.m */; };
 		C46A9A3F195D7AF100AD0F4A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C46A9A3E195D7AF100AD0F4A /* Foundation.framework */; };
 		C46A9A41195D7AF100AD0F4A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C46A9A40195D7AF100AD0F4A /* CoreGraphics.framework */; };
 		C46A9A43195D7AF100AD0F4A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C46A9A42195D7AF100AD0F4A /* UIKit.framework */; };
@@ -43,8 +47,15 @@
 /* Begin PBXFileReference section */
 		613D0F93FB374CC8BECDF9FC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F60936A068A4BA98AB7A105 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		C445411B196EC0BE00ECE02F /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		C445411C196EC0BE00ECE02F /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		C4542887196453F7000F53E8 /* run@2x.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "run@2x.gif"; sourceTree = "<group>"; };
 		C4542888196453F7000F53E8 /* spinner_dropbox@2x.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "spinner_dropbox@2x.gif"; sourceTree = "<group>"; };
+		C454288B19656B5E000F53E8 /* CustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCell.h; sourceTree = "<group>"; };
+		C454288C19656B5E000F53E8 /* CustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCell.m; sourceTree = "<group>"; };
+		C454289019656BC2000F53E8 /* CustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomCell.xib; sourceTree = "<group>"; };
+		C454289519657CA0000F53E8 /* CustomCellItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCellItems.h; sourceTree = "<group>"; };
+		C454289619657CA0000F53E8 /* CustomCellItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCellItems.m; sourceTree = "<group>"; };
 		C46A9A3B195D7AF100AD0F4A /* viralmedia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = viralmedia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C46A9A3E195D7AF100AD0F4A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C46A9A40195D7AF100AD0F4A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -141,6 +152,13 @@
 				C46A9A7D195D817D00AD0F4A /* MenuViewController.m */,
 				C46A9A79195D814400AD0F4A /* NewViewController.h */,
 				C46A9A7A195D814400AD0F4A /* NewViewController.m */,
+				C454288B19656B5E000F53E8 /* CustomCell.h */,
+				C454288C19656B5E000F53E8 /* CustomCell.m */,
+				C454289019656BC2000F53E8 /* CustomCell.xib */,
+				C454289519657CA0000F53E8 /* CustomCellItems.h */,
+				C454289619657CA0000F53E8 /* CustomCellItems.m */,
+				C445411B196EC0BE00ECE02F /* WebViewController.h */,
+				C445411C196EC0BE00ECE02F /* WebViewController.m */,
 				C46A9A53195D7AF100AD0F4A /* ViewController.h */,
 				C46A9A54195D7AF100AD0F4A /* ViewController.m */,
 				C46A9A73195D811400AD0F4A /* METransitions.h */,
@@ -262,6 +280,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C454289119656BC2000F53E8 /* CustomCell.xib in Resources */,
 				C46A9A57195D7AF100AD0F4A /* Images.xcassets in Resources */,
 				C4542889196453F7000F53E8 /* run@2x.gif in Resources */,
 				C454288A196453F7000F53E8 /* spinner_dropbox@2x.gif in Resources */,
@@ -319,7 +338,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C46A9A55195D7AF100AD0F4A /* ViewController.m in Sources */,
+				C445411D196EC0BE00ECE02F /* WebViewController.m in Sources */,
 				C46A9A78195D811400AD0F4A /* MEFoldAnimationController.m in Sources */,
+				C454289719657CA0000F53E8 /* CustomCellItems.m in Sources */,
+				C454288D19656B5E000F53E8 /* CustomCell.m in Sources */,
 				C46A9A4F195D7AF100AD0F4A /* AppDelegate.m in Sources */,
 				C46A9A7B195D814400AD0F4A /* NewViewController.m in Sources */,
 				C46A9A7E195D817D00AD0F4A /* MenuViewController.m in Sources */,

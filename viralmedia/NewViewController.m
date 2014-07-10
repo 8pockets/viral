@@ -10,9 +10,8 @@
 
 @interface NewViewController (){
     NSMutableArray *_items;
-    //BlogItem *_item;
-    //NSXMLParser *_parser;
-    //NSString *_elementName;
+    CustomCellItems *_item;
+    UIRefreshControl *_refreshControl;
 }
 @end
 
@@ -35,11 +34,11 @@
 {
     [super viewWillAppear:animated];
     
-    __weak typeof(self) weakSelf =self;
-    [self.NewContent addPullToRefreshActionHandler:^{
-        [weakSelf startDownload];
-        
-    } ProgressImagesGifName:@"spinner_dropbox@2x.gif" LoadingImagesGifName:@"run@2x.gif" ProgressScrollThreshold:50 LoadingImageFrameRate:30];
+//    __weak typeof(self) weakSelf =self;
+//    [self.NewContent addPullToRefreshActionHandler:^{
+//        [weakSelf startDownload];
+//        
+//    } ProgressImagesGifName:@"spinner_dropbox@2x.gif" LoadingImagesGifName:@"run@2x.gif" ProgressScrollThreshold:50 LoadingImageFrameRate:30];
     
 }
 - (void)viewDidLoad
@@ -47,8 +46,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    //self.NewContent.delegate = self;
-    //self.NewContent.dataSource = self;
+    self.NewContent.delegate = self;
+    self.NewContent.dataSource = self;
+    
+    //カスタムセルの設定
+    UINib *nib = [UINib nibWithNibName:@"CustomCell" bundle:nil];
+    [self.NewContent registerNib:nib forCellReuseIdentifier:@"NewCell"];
+    [self.searchDisplayController.searchResultsTableView registerNib:nib forCellReuseIdentifier:@"NewCell"];
+
     
     //SlidingViewController
     NSDictionary *transitionData = self.transitions.all[0];
@@ -63,6 +68,18 @@
     self.slidingViewController.customAnchoredGestures = @[];
     [self.navigationController.view addGestureRecognizer:self.slidingViewController.panGesture];
     
+    _items = [[NSMutableArray alloc] init];
+    _item = [[CustomCellItems alloc] init];
+    
+    //RefreshControl設定
+    _refreshControl = [[UIRefreshControl alloc] init];
+    [_refreshControl addTarget:self
+                        action:@selector(startDownload)
+              forControlEvents:UIControlEventValueChanged];
+    [self.NewContent addSubview:_refreshControl];
+    
+    [super viewDidLoad];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -70,17 +87,43 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return _items.count;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 70;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    cell.textLabel.text = @"Menu";
+    CustomCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NewCell"];
+    CustomCellItems *item = _items[indexPath.row];
+    cell.title.text = [item title];
+    cell.date.text = [item date];
+    cell.site.text = [item site];
+    NSString *viewtext = [[item view] stringByAppendingString:@" likes"];
+    cell.view.text = viewtext;
     return cell;
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"%@", @"セルの選択に成功しました");
+    // 選択状態の解除
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    //カスタムセルなので、prepareforSegueは呼ばれない。
+    CustomCellItems *selectitem = _items[indexPath.row];
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud setValue:[selectitem title] forKey:@"title"];
+    [ud setValue:[selectitem url] forKey:@"url"];
+    
+    [self performSegueWithIdentifier:@"webSegue" sender:selectitem];
+}
+
 /*
 #pragma mark - Navigation
 
@@ -95,34 +138,63 @@
 
 - (void)startDownload
 {
-    __weak typeof(self) weakSelf = self;
-    self.isLoading =YES;
-    int64_t delayInSeconds = 2.2;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+    [_refreshControl beginRefreshing];
+//    __weak typeof(self) weakSelf = self;
+//    self.isLoading =YES;
+//    int64_t delayInSeconds = 2.2;
+//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         
-        [weakSelf.NewContent beginUpdates];
+//        [weakSelf.NewContent beginUpdates];
         //[weakSelf.pData insertObject:[NSDate date] atIndex:0];
         //[weakSelf.NewContent insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationBottom];
         
-        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         
-        [manager GET:@"http://153.121.33.54/viral/select-week.php"
+        // AFJSONResponseSerializer、AFHTTPResponseSerializerの順にレスポンスを解析
+        NSArray *responseSerializers =
+        @[
+          [AFJSONResponseSerializer serializer],
+          [AFHTTPResponseSerializer serializer]
+          ];
+        
+        AFCompoundResponseSerializer *responseSerializer = [AFCompoundResponseSerializer compoundSerializerWithResponseSerializers:responseSerializers];
+        
+        manager.responseSerializer = responseSerializer;
+        
+        [manager GET:@"http://viral.8pockets.com/weekly.json"
           parameters:nil
-             success:^(NSURLSessionDataTask *task, id responseObject) {
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
                  // 通信に成功した場合の処理
-                 NSLog(@"responseObject: %@", responseObject);
-             } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                 _items = [[NSMutableArray alloc] init];
+                 for (NSDictionary *json in responseObject) {
+                     _item = [[CustomCellItems alloc] init];
+                     _item.title = [json objectForKey:@"title"];
+                     _item.url = [json objectForKey:@"url"];
+                     _item.date = [json objectForKey:@"published_at"];
+                     _item.view = [json objectForKey:@"bookmarks"];
+                     _item.site = [json objectForKey:@"site_name"];
+                     [_items addObject:_item];
+                 }
+             }
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                  // エラーの場合はエラーの内容をコンソールに出力する
                  NSLog(@"Error: %@", error);
              }];
-        [weakSelf.NewContent endUpdates];
+    //データ取得終了
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_refreshControl endRefreshing];
+        [self.NewContent performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+    });
+
+//        [self.NewContent reloadData];
+//        [weakSelf.NewContent endUpdates];
         
         //Stop PullToRefresh Activity Animation
-        [weakSelf.NewContent stopRefreshAnimation];
-        weakSelf.isLoading =NO;
+//        [weakSelf.NewContent stopRefreshAnimation];
+//        weakSelf.isLoading =NO;
         
-    });
+//    });
 /*
     _items = [[NSMutableArray alloc] init];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://pipes.yahoo.com/pipes/pipe.run?_id=b26f6f0b13d2b747850bc3cad62bec63&_render=json"]];
