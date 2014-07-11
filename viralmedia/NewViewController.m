@@ -54,6 +54,8 @@
     [self.NewContent registerNib:nib forCellReuseIdentifier:@"NewCell"];
     [self.searchDisplayController.searchResultsTableView registerNib:nib forCellReuseIdentifier:@"NewCell"];
 
+     //ツールバーの非表示
+    [self.navigationController setToolbarHidden:YES animated:YES];
     
     //SlidingViewController
     NSDictionary *transitionData = self.transitions.all[0];
