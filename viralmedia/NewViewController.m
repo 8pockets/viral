@@ -55,7 +55,7 @@
     [self.searchDisplayController.searchResultsTableView registerNib:nib forCellReuseIdentifier:@"NewCell"];
 
      //ツールバーの非表示
-    [self.navigationController setToolbarHidden:YES animated:YES];
+    //[self.navigationController setToolbarHidden:YES animated:YES];
     
     //SlidingViewController
     NSDictionary *transitionData = self.transitions.all[0];
@@ -72,6 +72,25 @@
     
     _items = [[NSMutableArray alloc] init];
     _item = [[CustomCellItems alloc] init];
+    
+    //初期データ OR 保存していたデータ読み込み
+    NSUserDefaults *Newsave = [NSUserDefaults standardUserDefaults];
+    _items = [[NSMutableArray alloc] init];
+    _item = [[CustomCellItems alloc] init];
+    if ([Newsave arrayForKey:@"Newsave"]) {
+        NSLog(@"%@",@"DATA!!!");
+        for (NSData *object in [Newsave arrayForKey:@"Newsave"]) {
+            NSString *dataEncode = [NSKeyedUnarchiver unarchiveObjectWithData:object];
+            [_items addObject:dataEncode];
+        }
+    }else{
+        NSLog(@"%@",@"NO DATA!!!");
+        _item = [[CustomCellItems alloc] init];
+        _items = [[NSMutableArray alloc] init];
+        _item.title = @"下に引き伸ばして更新！";
+        _item.url = @"";
+        [_items addObject:_item];
+    }
     
     //RefreshControl設定
     _refreshControl = [[UIRefreshControl alloc] init];
@@ -114,7 +133,6 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%@", @"セルの選択に成功しました");
     // 選択状態の解除
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     //カスタムセルなので、prepareforSegueは呼ばれない。
@@ -140,7 +158,6 @@
 
 - (void)startDownload
 {
-    [_refreshControl beginRefreshing];
 //    __weak typeof(self) weakSelf = self;
 //    self.isLoading =YES;
 //    int64_t delayInSeconds = 2.2;
@@ -164,7 +181,7 @@
         
         manager.responseSerializer = responseSerializer;
         
-        [manager GET:@"http://viral.8pockets.com/weekly.json"
+        [manager GET:@"http://viral.8pockets.com/new.json"
           parameters:nil
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
                  // 通信に成功した場合の処理
@@ -178,6 +195,7 @@
                      _item.site = [json objectForKey:@"site_name"];
                      [_items addObject:_item];
                  }
+                 [self.NewContent reloadData];
              }
              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                  // エラーの場合はエラーの内容をコンソールに出力する
@@ -187,71 +205,18 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [_refreshControl endRefreshing];
         [self.NewContent performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-    });
-
-//        [self.NewContent reloadData];
-//        [weakSelf.NewContent endUpdates];
         
-        //Stop PullToRefresh Activity Animation
-//        [weakSelf.NewContent stopRefreshAnimation];
-//        weakSelf.isLoading =NO;
-        
-//    });
-/*
-    _items = [[NSMutableArray alloc] init];
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://pipes.yahoo.com/pipes/pipe.run?_id=b26f6f0b13d2b747850bc3cad62bec63&_render=json"]];
-    NSHTTPURLResponse *response = nil;
-    NSError *error = nil;
-    NSData *jsonData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    //もしインターネット接続出来てなかった場合の処理を書く
-    NSDictionary *jsonObj = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
-    NSArray *array = [[jsonObj objectForKey:@"value"] objectForKey:@"items"];
-    
-    for (NSDictionary *json in array) {
-        
-        _item = [[BlogItem alloc] init];
-        
-        _item.title = [json objectForKey:@"title"];
-        
-        _item.url = [json objectForKey:@"link"];
-        
-        //ブログの最初の変な文字消す
-        NSString *target = @"^.*<p>.*\n";
-        NSString *basetext = [json objectForKey:@"description"];
-        NSRegularExpression *textregex = [NSRegularExpression regularExpressionWithPattern:target options:0 error:nil];
-        NSString *result =[textregex stringByReplacingMatchesInString:basetext options:0 range:NSMakeRange(0,basetext.length) withTemplate:@""];
-        _item.description = result;
-        
-        //UNIX時刻 → NSDate
-        NSString *timestmp = [[json objectForKey:@"y:published"]objectForKey:@"utime"];
-        double timestamp = [timestmp doubleValue];
-        NSTimeInterval timeInterval = timestamp;
-        // convert the time interval to a date
-        NSDate *myDate = [NSDate dateWithTimeIntervalSince1970:timeInterval];
-        // create the formatter for the desired output
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-        // set the label text
-        _item.date = [formatter stringFromDate:myDate];
-        
-        [_items addObject:_item];
-    }
-    //データ取得終了
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [_refreshControl endRefreshing];
-        [self.blogtable performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-        
-        //データ保存
-        NSUserDefaults *blogsave = [NSUserDefaults standardUserDefaults];
+        NSUserDefaults *Newsave = [NSUserDefaults standardUserDefaults];
         NSMutableArray *archivearray = [NSMutableArray arrayWithCapacity:_items.count];
         for (NSDictionary *object in _items) {
             NSData *dataEncode = [NSKeyedArchiver archivedDataWithRootObject:object];
             [archivearray addObject:dataEncode];
         }
-        [blogsave setObject:archivearray forKey:@"blogsave"];
-        [blogsave synchronize];
+        [Newsave setObject:archivearray forKey:@"Newsave"];
+        [Newsave synchronize];
+        
     });
-*/
+
 }
 
 - (IBAction)menuButtonTapped:(id)sender {

@@ -1,14 +1,14 @@
 //
-//  MonthViewController.m
+//  WeekViewController.m
 //  viralmedia
 //
-//  Created by 8pockets on 2014/07/11.
+//  Created by 8pockets on 2014/07/12.
 //  Copyright (c) 2014年 YamauchiShingo. All rights reserved.
 //
 
-#import "MonthViewController.h"
+#import "WeekViewController.h"
 
-@interface MonthViewController (){
+@interface WeekViewController (){
     NSMutableArray *_items;
     CustomCellItems *_item;
     UIRefreshControl *_refreshControl;
@@ -16,7 +16,7 @@
 
 @end
 
-@implementation MonthViewController
+@implementation WeekViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,13 +36,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.MonthContent.delegate = self;
-    self.MonthContent.dataSource = self;
+    self.WeekContent.delegate = self;
+    self.WeekContent.dataSource = self;
     
     //カスタムセルの設定
     UINib *nib = [UINib nibWithNibName:@"CustomCell" bundle:nil];
-    [self.MonthContent registerNib:nib forCellReuseIdentifier:@"MonthCell"];
-    [self.searchDisplayController.searchResultsTableView registerNib:nib forCellReuseIdentifier:@"MonthCell"];
+    [self.WeekContent registerNib:nib forCellReuseIdentifier:@"WeekCell"];
+    [self.searchDisplayController.searchResultsTableView registerNib:nib forCellReuseIdentifier:@"WeekCell"];
     
     //ツールバーの非表示
     //[self.navigationController setToolbarHidden:YES animated:YES];
@@ -64,12 +64,12 @@
     _item = [[CustomCellItems alloc] init];
     
     //初期データ OR 保存していたデータ読み込み
-    NSUserDefaults *Monthsave = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults *Weeksave = [NSUserDefaults standardUserDefaults];
     _items = [[NSMutableArray alloc] init];
     _item = [[CustomCellItems alloc] init];
-    if ([Monthsave arrayForKey:@"Monthsave"]) {
+    if ([Weeksave arrayForKey:@"Weeksave"]) {
         NSLog(@"%@",@"DATA!!!");
-        for (NSData *object in [Monthsave arrayForKey:@"Monthsave"]) {
+        for (NSData *object in [Weeksave arrayForKey:@"Weeksave"]) {
             NSString *dataEncode = [NSKeyedUnarchiver unarchiveObjectWithData:object];
             [_items addObject:dataEncode];
         }
@@ -87,7 +87,7 @@
     [_refreshControl addTarget:self
                         action:@selector(startDownload)
               forControlEvents:UIControlEventValueChanged];
-    [self.MonthContent addSubview:_refreshControl];
+    [self.WeekContent addSubview:_refreshControl];
     
     [super viewDidLoad];
 }
@@ -111,7 +111,7 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CustomCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MonthCell"];
+    CustomCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WeekCell"];
     CustomCellItems *item = _items[indexPath.row];
     cell.title.text = [item title];
     cell.date.text = [item date];
@@ -134,18 +134,18 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 - (void)startDownload
-{    
+{
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     // AFJSONResponseSerializer、AFHTTPResponseSerializerの順にレスポンスを解析
@@ -159,7 +159,7 @@
     
     manager.responseSerializer = responseSerializer;
     
-    [manager GET:@"http://viral.8pockets.com/monthly.json"
+    [manager GET:@"http://viral.8pockets.com/weekly.json"
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              // 通信に成功した場合の処理
@@ -173,7 +173,7 @@
                  _item.site = [json objectForKey:@"site_name"];
                  [_items addObject:_item];
              }
-             [self.MonthContent reloadData];
+             [self.WeekContent reloadData];
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              // エラーの場合はエラーの内容をコンソールに出力する
@@ -182,16 +182,16 @@
     //データ取得終了
     dispatch_async(dispatch_get_main_queue(), ^{
         [_refreshControl endRefreshing];
-        [self.MonthContent performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+        [self.WeekContent performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
         
-        NSUserDefaults *Monthsave = [NSUserDefaults standardUserDefaults];
+        NSUserDefaults *Weeksave = [NSUserDefaults standardUserDefaults];
         NSMutableArray *archivearray = [NSMutableArray arrayWithCapacity:_items.count];
         for (NSDictionary *object in _items) {
             NSData *dataEncode = [NSKeyedArchiver archivedDataWithRootObject:object];
             [archivearray addObject:dataEncode];
         }
-        [Monthsave setObject:archivearray forKey:@"Monthsave"];
-        [Monthsave synchronize];
+        [Weeksave setObject:archivearray forKey:@"Weeksave"];
+        [Weeksave synchronize];
         
     });
     

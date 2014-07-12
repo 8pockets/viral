@@ -13,6 +13,5 @@
 #import "NJKWebViewProgressView.h"
 @interface WebViewController : UIViewController<UIWebViewDelegate,NJKScrollFullscreenDelegate,NJKWebViewProgressDelegate>
 @property (weak, nonatomic) IBOutlet UIWebView *webview;
-@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
 @end

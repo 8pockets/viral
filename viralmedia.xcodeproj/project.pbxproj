@@ -10,6 +10,8 @@
 		2477D93585F440C38AAD0861 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 613D0F93FB374CC8BECDF9FC /* libPods.a */; };
 		C445411D196EC0BE00ECE02F /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C445411C196EC0BE00ECE02F /* WebViewController.m */; };
 		C4454120196F939B00ECE02F /* MonthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C445411F196F939B00ECE02F /* MonthViewController.m */; };
+		C4454123197033C500ECE02F /* MonthCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4454122197033C500ECE02F /* MonthCell.m */; };
+		C44541251970342E00ECE02F /* MonthCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C44541241970342E00ECE02F /* MonthCell.xib */; };
 		C4542889196453F7000F53E8 /* run@2x.gif in Resources */ = {isa = PBXBuildFile; fileRef = C4542887196453F7000F53E8 /* run@2x.gif */; };
 		C454288A196453F7000F53E8 /* spinner_dropbox@2x.gif in Resources */ = {isa = PBXBuildFile; fileRef = C4542888196453F7000F53E8 /* spinner_dropbox@2x.gif */; };
 		C454288D19656B5E000F53E8 /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C454288C19656B5E000F53E8 /* CustomCell.m */; };
@@ -33,6 +35,9 @@
 		C46A9A78195D811400AD0F4A /* MEFoldAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C46A9A76195D811400AD0F4A /* MEFoldAnimationController.m */; };
 		C46A9A7B195D814400AD0F4A /* NewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C46A9A7A195D814400AD0F4A /* NewViewController.m */; };
 		C46A9A7E195D817D00AD0F4A /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C46A9A7D195D817D00AD0F4A /* MenuViewController.m */; };
+		C4D3172D1971645D002051D4 /* WeekViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4D3172C1971645D002051D4 /* WeekViewController.m */; };
+		C4D31730197164B9002051D4 /* WeekCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4D3172F197164B9002051D4 /* WeekCell.m */; };
+		C4D31732197164D6002051D4 /* WeekCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4D31731197164D6002051D4 /* WeekCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +57,9 @@
 		C445411C196EC0BE00ECE02F /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		C445411E196F939B00ECE02F /* MonthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonthViewController.h; sourceTree = "<group>"; };
 		C445411F196F939B00ECE02F /* MonthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonthViewController.m; sourceTree = "<group>"; };
+		C4454121197033C500ECE02F /* MonthCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonthCell.h; sourceTree = "<group>"; };
+		C4454122197033C500ECE02F /* MonthCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonthCell.m; sourceTree = "<group>"; };
+		C44541241970342E00ECE02F /* MonthCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MonthCell.xib; sourceTree = "<group>"; };
 		C4542887196453F7000F53E8 /* run@2x.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "run@2x.gif"; sourceTree = "<group>"; };
 		C4542888196453F7000F53E8 /* spinner_dropbox@2x.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "spinner_dropbox@2x.gif"; sourceTree = "<group>"; };
 		C454288B19656B5E000F53E8 /* CustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCell.h; sourceTree = "<group>"; };
@@ -86,6 +94,11 @@
 		C46A9A7A195D814400AD0F4A /* NewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewViewController.m; sourceTree = "<group>"; };
 		C46A9A7C195D817D00AD0F4A /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		C46A9A7D195D817D00AD0F4A /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		C4D3172B1971645D002051D4 /* WeekViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeekViewController.h; sourceTree = "<group>"; };
+		C4D3172C1971645D002051D4 /* WeekViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeekViewController.m; sourceTree = "<group>"; };
+		C4D3172E197164B9002051D4 /* WeekCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeekCell.h; sourceTree = "<group>"; };
+		C4D3172F197164B9002051D4 /* WeekCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeekCell.m; sourceTree = "<group>"; };
+		C4D31731197164D6002051D4 /* WeekCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeekCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +175,14 @@
 				C454289619657CA0000F53E8 /* CustomCellItems.m */,
 				C445411E196F939B00ECE02F /* MonthViewController.h */,
 				C445411F196F939B00ECE02F /* MonthViewController.m */,
+				C4454121197033C500ECE02F /* MonthCell.h */,
+				C4454122197033C500ECE02F /* MonthCell.m */,
+				C44541241970342E00ECE02F /* MonthCell.xib */,
+				C4D3172B1971645D002051D4 /* WeekViewController.h */,
+				C4D3172C1971645D002051D4 /* WeekViewController.m */,
+				C4D3172E197164B9002051D4 /* WeekCell.h */,
+				C4D3172F197164B9002051D4 /* WeekCell.m */,
+				C4D31731197164D6002051D4 /* WeekCell.xib */,
 				C445411B196EC0BE00ECE02F /* WebViewController.h */,
 				C445411C196EC0BE00ECE02F /* WebViewController.m */,
 				C46A9A53195D7AF100AD0F4A /* ViewController.h */,
@@ -286,7 +307,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C454289119656BC2000F53E8 /* CustomCell.xib in Resources */,
+				C4D31732197164D6002051D4 /* WeekCell.xib in Resources */,
 				C46A9A57195D7AF100AD0F4A /* Images.xcassets in Resources */,
+				C44541251970342E00ECE02F /* MonthCell.xib in Resources */,
 				C4542889196453F7000F53E8 /* run@2x.gif in Resources */,
 				C454288A196453F7000F53E8 /* spinner_dropbox@2x.gif in Resources */,
 				C46A9A49195D7AF100AD0F4A /* InfoPlist.strings in Resources */,
@@ -343,13 +366,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				C46A9A55195D7AF100AD0F4A /* ViewController.m in Sources */,
+				C4D31730197164B9002051D4 /* WeekCell.m in Sources */,
 				C445411D196EC0BE00ECE02F /* WebViewController.m in Sources */,
 				C4454120196F939B00ECE02F /* MonthViewController.m in Sources */,
 				C46A9A78195D811400AD0F4A /* MEFoldAnimationController.m in Sources */,
 				C454289719657CA0000F53E8 /* CustomCellItems.m in Sources */,
 				C454288D19656B5E000F53E8 /* CustomCell.m in Sources */,
 				C46A9A4F195D7AF100AD0F4A /* AppDelegate.m in Sources */,
+				C4D3172D1971645D002051D4 /* WeekViewController.m in Sources */,
 				C46A9A7B195D814400AD0F4A /* NewViewController.m in Sources */,
+				C4454123197033C500ECE02F /* MonthCell.m in Sources */,
 				C46A9A7E195D817D00AD0F4A /* MenuViewController.m in Sources */,
 				C46A9A77195D811400AD0F4A /* METransitions.m in Sources */,
 				C46A9A4B195D7AF100AD0F4A /* main.m in Sources */,
@@ -481,7 +507,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "viralmedia/viralmedia-Prefix.pch";
 				INFOPLIST_FILE = "viralmedia/viralmedia-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -495,7 +523,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "viralmedia/viralmedia-Prefix.pch";
 				INFOPLIST_FILE = "viralmedia/viralmedia-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
