@@ -7,11 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NJKScrollFullScreen.h"
-#import "UIViewController+NJKFullScreenSupport.h"
-#import "NJKWebViewProgress.h"
-#import "NJKWebViewProgressView.h"
-@interface WebViewController : UIViewController<UIWebViewDelegate,NJKScrollFullscreenDelegate,NJKWebViewProgressDelegate>
+#import "TOWebViewController.h"
+@interface WebViewController : UIViewController<UIWebViewDelegate>
 @property (weak, nonatomic) IBOutlet UIWebView *webview;
 
 @end

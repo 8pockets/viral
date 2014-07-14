@@ -11,7 +11,6 @@
 @interface WeekViewController (){
     NSMutableArray *_items;
     CustomCellItems *_item;
-    UIRefreshControl *_refreshControl;
 }
 
 @end
@@ -40,7 +39,7 @@
     self.WeekContent.dataSource = self;
     
     //カスタムセルの設定
-    UINib *nib = [UINib nibWithNibName:@"CustomCell" bundle:nil];
+    UINib *nib = [UINib nibWithNibName:@"WeekCell" bundle:nil];
     [self.WeekContent registerNib:nib forCellReuseIdentifier:@"WeekCell"];
     [self.searchDisplayController.searchResultsTableView registerNib:nib forCellReuseIdentifier:@"WeekCell"];
     
@@ -65,8 +64,6 @@
     
     //初期データ OR 保存していたデータ読み込み
     NSUserDefaults *Weeksave = [NSUserDefaults standardUserDefaults];
-    _items = [[NSMutableArray alloc] init];
-    _item = [[CustomCellItems alloc] init];
     if ([Weeksave arrayForKey:@"Weeksave"]) {
         NSLog(@"%@",@"DATA!!!");
         for (NSData *object in [Weeksave arrayForKey:@"Weeksave"]) {
@@ -83,11 +80,18 @@
     }
     
     //RefreshControl設定
-    _refreshControl = [[UIRefreshControl alloc] init];
-    [_refreshControl addTarget:self
-                        action:@selector(startDownload)
-              forControlEvents:UIControlEventValueChanged];
-    [self.WeekContent addSubview:_refreshControl];
+    RHRefreshControlConfiguration *refreshConfiguration = [[RHRefreshControlConfiguration alloc] init];
+    refreshConfiguration.refreshView = RHRefreshViewStylePinterest;
+    //  refreshConfiguration.minimumForStart = @0;
+    //  refreshConfiguration.maximumForPull = @120;
+    self.refreshControl = [[RHRefreshControl alloc] initWithConfiguration:refreshConfiguration];
+    self.refreshControl.delegate = self;
+    [self.refreshControl attachToScrollView:self.WeekContent];
+    self.WeekContent.backgroundColor = [UIColor colorWithWhite:0.88 alpha:1.0];
+    
+    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
     
     [super viewDidLoad];
 }
@@ -111,13 +115,24 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CustomCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WeekCell"];
+    WeekCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WeekCell"];
     CustomCellItems *item = _items[indexPath.row];
     cell.title.text = [item title];
     cell.date.text = [item date];
     cell.site.text = [item site];
     NSString *viewtext = [[item view] stringByAppendingString:@" likes"];
     cell.view.text = viewtext;
+    
+    // For even
+    if (indexPath.row % 2 == 0) {
+        cell.backgroundColor = [UIColor whiteColor];
+        // does not work
+    }
+    // For odd
+    else {
+        cell.backgroundColor = [UIColor colorWithRed:0.949 green:0.949 blue:0.949 alpha:1.0];     // does not work
+    }
+
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -129,23 +144,47 @@
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     [ud setValue:[selectitem title] forKey:@"title"];
     [ud setValue:[selectitem url] forKey:@"url"];
+    [ud synchronize];
     
-    [self performSegueWithIdentifier:@"webSegue" sender:selectitem];
+    NSURL *url = [NSURL URLWithString:[selectitem url]];
+    TOWebViewController *webViewController = [[TOWebViewController alloc] initWithURL:url];
+    [self.navigationController pushViewController:webViewController animated:YES];
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+- (IBAction)menuButtonTapped:(id)sender {
+    [self.slidingViewController anchorTopViewToRightAnimated:YES];
+}
 
-- (void)startDownload
-{
+#pragma mark - TableView ScrollView
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+	
+	[self.refreshControl refreshScrollViewDidScroll:scrollView];
+    
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+	
+	[self.refreshControl refreshScrollViewDidEndDragging:scrollView];
+	
+}
+
+#pragma mark - RHRefreshControl Delegate
+- (void)refreshDidTriggerRefresh:(RHRefreshControl *)refreshControl {
+    self.loading = YES;
+	
+	[self performSelector:@selector(_fakeLoadComplete) withObject:nil afterDelay:2.0];
+}
+
+- (BOOL)refreshDataSourceIsLoading:(RHRefreshControl *)refreshControl {
+    return self.isLoading; // should return if data source model is reloading
+}
+
+- (void) _fakeLoadComplete {
+    self.loading = NO;
+    [self.refreshControl refreshScrollViewDataSourceDidFinishedLoading:self.WeekContent];
+    
+    _items = [[NSMutableArray alloc] init];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     // AFJSONResponseSerializer、AFHTTPResponseSerializerの順にレスポンスを解析
@@ -174,31 +213,21 @@
                  [_items addObject:_item];
              }
              [self.WeekContent reloadData];
+             
+             NSUserDefaults *Weeksave = [NSUserDefaults standardUserDefaults];
+             NSMutableArray *archivearray = [NSMutableArray arrayWithCapacity:_items.count];
+             for (NSDictionary *object in _items) {
+                 NSData *dataEncode = [NSKeyedArchiver archivedDataWithRootObject:object];
+                 [archivearray addObject:dataEncode];
+             }
+             [Weeksave setObject:archivearray forKey:@"Weeksave"];
+             [Weeksave synchronize];
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              // エラーの場合はエラーの内容をコンソールに出力する
              NSLog(@"Error: %@", error);
          }];
     //データ取得終了
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [_refreshControl endRefreshing];
-        [self.WeekContent performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-        
-        NSUserDefaults *Weeksave = [NSUserDefaults standardUserDefaults];
-        NSMutableArray *archivearray = [NSMutableArray arrayWithCapacity:_items.count];
-        for (NSDictionary *object in _items) {
-            NSData *dataEncode = [NSKeyedArchiver archivedDataWithRootObject:object];
-            [archivearray addObject:dataEncode];
-        }
-        [Weeksave setObject:archivearray forKey:@"Weeksave"];
-        [Weeksave synchronize];
-        
-    });
-    
+    [self.WeekContent performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
 }
-
-- (IBAction)menuButtonTapped:(id)sender {
-    [self.slidingViewController anchorTopViewToRightAnimated:YES];
-}
-
 @end

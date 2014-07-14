@@ -7,16 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CustomCell.h"
+#import "WeekCell.h"
 #import "CustomCellItems.h"
 #import "ECSlidingViewController.h"
 #import "UIViewController+ECSlidingViewController.h"
 #import "METransitions.h"
 //#import "UIScrollView+UzysAnimatedGifPullToRefresh.h"
 #import "AFNetworking.h"
-@interface WeekViewController : UIViewController<ECSlidingViewControllerDelegate,UITableViewDataSource,UITableViewDelegate>
+#import "RHRefreshControl.h"
+#import "TOWebViewController.h"
+@interface WeekViewController : UIViewController<ECSlidingViewControllerDelegate,UITableViewDataSource,UITableViewDelegate,RHRefreshControlDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *WeekContent;
 @property (nonatomic, strong) METransitions *transitions;
-@property (nonatomic,assign) BOOL isLoading;
+@property (nonatomic, strong) RHRefreshControl *refreshControl;
+@property (nonatomic, assign, getter = isLoading) BOOL loading;
 
 @end

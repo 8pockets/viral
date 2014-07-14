@@ -35,7 +35,7 @@
      self.transitionsNavigationController = (UINavigationController *)self.slidingViewController.topViewController;
     
     //セパレーターの色
-    [self.menutable setSeparatorColor:[UIColor colorWithRed:0.220 green:0.255 blue:0.278 alpha:1.0]];
+    [self.menutable setSeparatorColor:[UIColor colorWithRed:0.45 green:0.45 blue:0.45 alpha:1.0]];
     //フッターの要らない部分削除
     //self.menutable.tableFooterView = [[UIView alloc] init];
 }
@@ -45,17 +45,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (NSArray *)menuItems {
     if (_menuItems) return _menuItems;
@@ -131,7 +120,7 @@
         self.slidingViewController.topViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MonthNavigationController"];
     }
     else if ([menuItem isEqualToString:@"履歴"]) {
-        self.slidingViewController.topViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MonthNavigationController"];
+        self.slidingViewController.topViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"HistoryNavigationController"];
     }
     else if ([menuItem isEqualToString:@"おすすめアプリ"]) {
         self.slidingViewController.topViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MonthNavigationController"];

@@ -11,7 +11,6 @@
 @interface NewViewController (){
     NSMutableArray *_items;
     CustomCellItems *_item;
-    UIRefreshControl *_refreshControl;
 }
 @end
 
@@ -33,14 +32,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-//    __weak typeof(self) weakSelf =self;
-//    [self.NewContent addPullToRefreshActionHandler:^{
-//        [weakSelf startDownload];
-//        
-//    } ProgressImagesGifName:@"spinner_dropbox@2x.gif" LoadingImagesGifName:@"run@2x.gif" ProgressScrollThreshold:50 LoadingImageFrameRate:30];
-    
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -53,31 +46,12 @@
     UINib *nib = [UINib nibWithNibName:@"CustomCell" bundle:nil];
     [self.NewContent registerNib:nib forCellReuseIdentifier:@"NewCell"];
     [self.searchDisplayController.searchResultsTableView registerNib:nib forCellReuseIdentifier:@"NewCell"];
-
-     //ツールバーの非表示
-    //[self.navigationController setToolbarHidden:YES animated:YES];
-    
-    //SlidingViewController
-    NSDictionary *transitionData = self.transitions.all[0];
-    NSLog(@"%@",transitionData);
-    id<ECSlidingViewControllerDelegate> transition = transitionData[@"transition"];
-    if (transition == (id)[NSNull null]) {
-        self.slidingViewController.delegate = nil;
-    } else {
-        self.slidingViewController.delegate = transition;
-    }
-    self.slidingViewController.topViewAnchoredGesture = ECSlidingViewControllerAnchoredGestureTapping | ECSlidingViewControllerAnchoredGesturePanning;
-    self.slidingViewController.customAnchoredGestures = @[];
-    [self.navigationController.view addGestureRecognizer:self.slidingViewController.panGesture];
-    
-    _items = [[NSMutableArray alloc] init];
-    _item = [[CustomCellItems alloc] init];
     
     //初期データ OR 保存していたデータ読み込み
     NSUserDefaults *Newsave = [NSUserDefaults standardUserDefaults];
     _items = [[NSMutableArray alloc] init];
     _item = [[CustomCellItems alloc] init];
-    if ([Newsave arrayForKey:@"Newsave"]) {
+    if ([Newsave arrayForKey:@"Newsave"] != nil) {
         NSLog(@"%@",@"DATA!!!");
         for (NSData *object in [Newsave arrayForKey:@"Newsave"]) {
             NSString *dataEncode = [NSKeyedUnarchiver unarchiveObjectWithData:object];
@@ -92,14 +66,32 @@
         [_items addObject:_item];
     }
     
-    //RefreshControl設定
-    _refreshControl = [[UIRefreshControl alloc] init];
-    [_refreshControl addTarget:self
-                        action:@selector(startDownload)
-              forControlEvents:UIControlEventValueChanged];
-    [self.NewContent addSubview:_refreshControl];
+    //SlidingViewController
+    NSDictionary *transitionData = self.transitions.all[0];
+    NSLog(@"%@",transitionData);
+    id<ECSlidingViewControllerDelegate> transition = transitionData[@"transition"];
+    if (transition == (id)[NSNull null]) {
+        self.slidingViewController.delegate = nil;
+    } else {
+        self.slidingViewController.delegate = transition;
+    }
+    self.slidingViewController.topViewAnchoredGesture = ECSlidingViewControllerAnchoredGestureTapping | ECSlidingViewControllerAnchoredGesturePanning;
+    self.slidingViewController.customAnchoredGestures = @[];
+    [self.navigationController.view addGestureRecognizer:self.slidingViewController.panGesture];
     
-    [super viewDidLoad];
+    //RefreshControl設定
+    RHRefreshControlConfiguration *refreshConfiguration = [[RHRefreshControlConfiguration alloc] init];
+    refreshConfiguration.refreshView = RHRefreshViewStylePinterest;
+    //  refreshConfiguration.minimumForStart = @0;
+    //  refreshConfiguration.maximumForPull = @120;
+    self.refreshControl = [[RHRefreshControl alloc] initWithConfiguration:refreshConfiguration];
+    self.refreshControl.delegate = self;
+    [self.refreshControl attachToScrollView:self.NewContent];
+    self.NewContent.backgroundColor = [UIColor colorWithWhite:0.88 alpha:1.0];
+    
+    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
     
 }
 
@@ -122,13 +114,24 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CustomCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NewCell"];
+    static NSString *CellIdentifier = @"NewCell";
+    CustomCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     CustomCellItems *item = _items[indexPath.row];
     cell.title.text = [item title];
     cell.date.text = [item date];
     cell.site.text = [item site];
     NSString *viewtext = [[item view] stringByAppendingString:@" likes"];
     cell.view.text = viewtext;
+    
+    // For even
+    if (indexPath.row % 2 == 0) {
+        cell.backgroundColor = [UIColor whiteColor];
+    }
+    // For odd
+    else {
+        cell.backgroundColor = [UIColor colorWithRed:0.949 green:0.949 blue:0.949 alpha:1.0];
+    }
+
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -138,88 +141,98 @@
     //カスタムセルなので、prepareforSegueは呼ばれない。
     CustomCellItems *selectitem = _items[indexPath.row];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    [ud setValue:[selectitem title] forKey:@"title"];
+//    [ud setValue:[selectitem title] forKey:@"title"];
     [ud setValue:[selectitem url] forKey:@"url"];
+    [ud setValue:[selectitem pageid] forKey:@"id"];
+    [ud synchronize];
     
-    [self performSegueWithIdentifier:@"webSegue" sender:selectitem];
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
-
-- (void)startDownload
-{
-//    __weak typeof(self) weakSelf = self;
-//    self.isLoading =YES;
-//    int64_t delayInSeconds = 2.2;
-//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        
-//        [weakSelf.NewContent beginUpdates];
-        //[weakSelf.pData insertObject:[NSDate date] atIndex:0];
-        //[weakSelf.NewContent insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationBottom];
-        
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        
-        // AFJSONResponseSerializer、AFHTTPResponseSerializerの順にレスポンスを解析
-        NSArray *responseSerializers =
-        @[
-          [AFJSONResponseSerializer serializer],
-          [AFHTTPResponseSerializer serializer]
-          ];
-        
-        AFCompoundResponseSerializer *responseSerializer = [AFCompoundResponseSerializer compoundSerializerWithResponseSerializers:responseSerializers];
-        
-        manager.responseSerializer = responseSerializer;
-        
-        [manager GET:@"http://viral.8pockets.com/new.json"
-          parameters:nil
-             success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                 // 通信に成功した場合の処理
-                 _items = [[NSMutableArray alloc] init];
-                 for (NSDictionary *json in responseObject) {
-                     _item = [[CustomCellItems alloc] init];
-                     _item.title = [json objectForKey:@"title"];
-                     _item.url = [json objectForKey:@"url"];
-                     _item.date = [json objectForKey:@"published_at"];
-                     _item.view = [json objectForKey:@"bookmarks"];
-                     _item.site = [json objectForKey:@"site_name"];
-                     [_items addObject:_item];
-                 }
-                 [self.NewContent reloadData];
-             }
-             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                 // エラーの場合はエラーの内容をコンソールに出力する
-                 NSLog(@"Error: %@", error);
-             }];
-    //データ取得終了
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [_refreshControl endRefreshing];
-        [self.NewContent performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-        
-        NSUserDefaults *Newsave = [NSUserDefaults standardUserDefaults];
-        NSMutableArray *archivearray = [NSMutableArray arrayWithCapacity:_items.count];
-        for (NSDictionary *object in _items) {
-            NSData *dataEncode = [NSKeyedArchiver archivedDataWithRootObject:object];
-            [archivearray addObject:dataEncode];
-        }
-        [Newsave setObject:archivearray forKey:@"Newsave"];
-        [Newsave synchronize];
-        
-    });
-
+    NSURL *url = [NSURL URLWithString:[selectitem url]];
+    TOWebViewController *webViewController = [[TOWebViewController alloc] initWithURL:url];
+    [self.navigationController pushViewController:webViewController animated:YES];
 }
 
 - (IBAction)menuButtonTapped:(id)sender {
     [self.slidingViewController anchorTopViewToRightAnimated:YES];
+}
+
+//PullToRefresh
+
+#pragma mark - TableView ScrollView
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+	
+	[self.refreshControl refreshScrollViewDidScroll:scrollView];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+	
+	[self.refreshControl refreshScrollViewDidEndDragging:scrollView];
+	
+}
+
+#pragma mark - RHRefreshControl Delegate
+- (void)refreshDidTriggerRefresh:(RHRefreshControl *)refreshControl {
+    self.loading = YES;
+	
+	[self performSelector:@selector(_fakeLoadComplete) withObject:nil afterDelay:2.0];
+}
+
+- (BOOL)refreshDataSourceIsLoading:(RHRefreshControl *)refreshControl {
+
+    return self.isLoading; // should return if data source model is reloading
+
+}
+
+- (void) _fakeLoadComplete {
+    self.loading = NO;
+    [self.refreshControl refreshScrollViewDataSourceDidFinishedLoading:self.NewContent];
+    
+    NSLog(@"%@",@"DATA REQUEST!!!");
+    _items = [[NSMutableArray alloc] init];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    // AFJSONResponseSerializer、AFHTTPResponseSerializerの順にレスポンスを解析
+    NSArray *responseSerializers =
+    @[
+      [AFJSONResponseSerializer serializer],
+      [AFHTTPResponseSerializer serializer]
+      ];
+    
+    AFCompoundResponseSerializer *responseSerializer = [AFCompoundResponseSerializer compoundSerializerWithResponseSerializers:responseSerializers];
+    
+    manager.responseSerializer = responseSerializer;
+    
+    [manager GET:@"http://viral.8pockets.com/new.json"
+      parameters:nil
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             // 通信に成功した場合の処理
+             //_items = [[NSMutableArray alloc] init];
+             for (NSDictionary *json in responseObject) {
+                 _item = [[CustomCellItems alloc] init];
+                 _item.pageid = [json objectForKey:@"id"];
+                 _item.title = [json objectForKey:@"title"];
+                 _item.url = [json objectForKey:@"url"];
+                 _item.date = [json objectForKey:@"published_at"];
+                 _item.view = [json objectForKey:@"bookmarks"];
+                 _item.site = [json objectForKey:@"site_name"];
+                 [_items addObject:_item];
+             }
+             [self.NewContent reloadData];
+             
+             NSUserDefaults *Newsave = [NSUserDefaults standardUserDefaults];
+             NSMutableArray *archivearray = [NSMutableArray arrayWithCapacity:_items.count];
+             for (NSDictionary *object in _items) {
+                 NSData *dataEncode = [NSKeyedArchiver archivedDataWithRootObject:object];
+                 [archivearray addObject:dataEncode];
+             }
+             [Newsave setObject:archivearray forKey:@"Newsave"];
+             [Newsave synchronize];
+             
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             // エラーの場合はエラーの内容をコンソールに出力する
+             NSLog(@"Error: %@", error);
+         }];
+    //データ取得終了
+    //[self.NewContent performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
 }
 @end

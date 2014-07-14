@@ -10,6 +10,7 @@
 
 @interface CustomCellItems : NSObject
 
+@property NSString *pageid;
 @property NSString *title;
 @property NSString *url;
 @property NSString *date;

@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		2477D93585F440C38AAD0861 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 613D0F93FB374CC8BECDF9FC /* libPods.a */; };
+		C42E2D9A197407B7003D332F /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C42E2D99197407B7003D332F /* menu@2x.png */; };
+		C42E2D9C1974131C003D332F /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C42E2D9B1974131C003D332F /* Twitter.framework */; };
+		C42E2D9E19741325003D332F /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C42E2D9D19741325003D332F /* MessageUI.framework */; };
+		C42E2DA01974132D003D332F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C42E2D9F1974132D003D332F /* QuartzCore.framework */; };
+		C42E2DA319741C44003D332F /* action@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C42E2DA219741C44003D332F /* action@2x.png */; };
 		C445411D196EC0BE00ECE02F /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C445411C196EC0BE00ECE02F /* WebViewController.m */; };
 		C4454120196F939B00ECE02F /* MonthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C445411F196F939B00ECE02F /* MonthViewController.m */; };
 		C4454123197033C500ECE02F /* MonthCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4454122197033C500ECE02F /* MonthCell.m */; };
@@ -38,6 +43,7 @@
 		C4D3172D1971645D002051D4 /* WeekViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4D3172C1971645D002051D4 /* WeekViewController.m */; };
 		C4D31730197164B9002051D4 /* WeekCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4D3172F197164B9002051D4 /* WeekCell.m */; };
 		C4D31732197164D6002051D4 /* WeekCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4D31731197164D6002051D4 /* WeekCell.xib */; };
+		C4D3173519719525002051D4 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4D3173419719525002051D4 /* HistoryViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +59,11 @@
 /* Begin PBXFileReference section */
 		613D0F93FB374CC8BECDF9FC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F60936A068A4BA98AB7A105 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		C42E2D99197407B7003D332F /* menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu@2x.png"; sourceTree = "<group>"; };
+		C42E2D9B1974131C003D332F /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
+		C42E2D9D19741325003D332F /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		C42E2D9F1974132D003D332F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C42E2DA219741C44003D332F /* action@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action@2x.png"; sourceTree = "<group>"; };
 		C445411B196EC0BE00ECE02F /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		C445411C196EC0BE00ECE02F /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		C445411E196F939B00ECE02F /* MonthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonthViewController.h; sourceTree = "<group>"; };
@@ -99,6 +110,8 @@
 		C4D3172E197164B9002051D4 /* WeekCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeekCell.h; sourceTree = "<group>"; };
 		C4D3172F197164B9002051D4 /* WeekCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeekCell.m; sourceTree = "<group>"; };
 		C4D31731197164D6002051D4 /* WeekCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeekCell.xib; sourceTree = "<group>"; };
+		C4D3173319719525002051D4 /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
+		C4D3173419719525002051D4 /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +119,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C42E2DA01974132D003D332F /* QuartzCore.framework in Frameworks */,
+				C42E2D9E19741325003D332F /* MessageUI.framework in Frameworks */,
+				C42E2D9C1974131C003D332F /* Twitter.framework in Frameworks */,
 				C46A9A41195D7AF100AD0F4A /* CoreGraphics.framework in Frameworks */,
 				C46A9A43195D7AF100AD0F4A /* UIKit.framework in Frameworks */,
 				C46A9A3F195D7AF100AD0F4A /* Foundation.framework in Frameworks */,
@@ -149,6 +165,9 @@
 		C46A9A3D195D7AF100AD0F4A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C42E2D9F1974132D003D332F /* QuartzCore.framework */,
+				C42E2D9D19741325003D332F /* MessageUI.framework */,
+				C42E2D9B1974131C003D332F /* Twitter.framework */,
 				C46A9A3E195D7AF100AD0F4A /* Foundation.framework */,
 				C46A9A40195D7AF100AD0F4A /* CoreGraphics.framework */,
 				C46A9A42195D7AF100AD0F4A /* UIKit.framework */,
@@ -183,6 +202,8 @@
 				C4D3172E197164B9002051D4 /* WeekCell.h */,
 				C4D3172F197164B9002051D4 /* WeekCell.m */,
 				C4D31731197164D6002051D4 /* WeekCell.xib */,
+				C4D3173319719525002051D4 /* HistoryViewController.h */,
+				C4D3173419719525002051D4 /* HistoryViewController.m */,
 				C445411B196EC0BE00ECE02F /* WebViewController.h */,
 				C445411C196EC0BE00ECE02F /* WebViewController.m */,
 				C46A9A53195D7AF100AD0F4A /* ViewController.h */,
@@ -201,6 +222,8 @@
 			isa = PBXGroup;
 			children = (
 				C4542887196453F7000F53E8 /* run@2x.gif */,
+				C42E2D99197407B7003D332F /* menu@2x.png */,
+				C42E2DA219741C44003D332F /* action@2x.png */,
 				C4542888196453F7000F53E8 /* spinner_dropbox@2x.gif */,
 				C46A9A46195D7AF100AD0F4A /* viralmedia-Info.plist */,
 				C46A9A47195D7AF100AD0F4A /* InfoPlist.strings */,
@@ -308,8 +331,10 @@
 			files = (
 				C454289119656BC2000F53E8 /* CustomCell.xib in Resources */,
 				C4D31732197164D6002051D4 /* WeekCell.xib in Resources */,
+				C42E2DA319741C44003D332F /* action@2x.png in Resources */,
 				C46A9A57195D7AF100AD0F4A /* Images.xcassets in Resources */,
 				C44541251970342E00ECE02F /* MonthCell.xib in Resources */,
+				C42E2D9A197407B7003D332F /* menu@2x.png in Resources */,
 				C4542889196453F7000F53E8 /* run@2x.gif in Resources */,
 				C454288A196453F7000F53E8 /* spinner_dropbox@2x.gif in Resources */,
 				C46A9A49195D7AF100AD0F4A /* InfoPlist.strings in Resources */,
@@ -373,6 +398,7 @@
 				C454289719657CA0000F53E8 /* CustomCellItems.m in Sources */,
 				C454288D19656B5E000F53E8 /* CustomCell.m in Sources */,
 				C46A9A4F195D7AF100AD0F4A /* AppDelegate.m in Sources */,
+				C4D3173519719525002051D4 /* HistoryViewController.m in Sources */,
 				C4D3172D1971645D002051D4 /* WeekViewController.m in Sources */,
 				C46A9A7B195D814400AD0F4A /* NewViewController.m in Sources */,
 				C4454123197033C500ECE02F /* MonthCell.m in Sources */,
