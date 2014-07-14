@@ -87,7 +87,7 @@
             </objects>
             <point key="canvasLocation" x="525" y="124"/>
         </scene>
-        <!--New View Controller - Virary-->
+        <!--New View Controller-->
         <scene sceneID="kpy-sN-uPL">
             <objects>
                 <viewController storyboardIdentifier="ContentTable" useStoryboardIdentifierAsRestorationIdentifier="YES" id="uRJ-hg-pFY" customClass="NewViewController" sceneMemberID="viewController">
@@ -127,7 +127,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Virary" id="ajg-Ou-SfV">
+                    <navigationItem key="navigationItem" id="ajg-Ou-SfV">
                         <barButtonItem key="backBarButtonItem" title="戻る" id="DQW-lp-BtM">
                             <color key="tintColor" red="0.95686274510000002" green="0.96470588239999999" blue="0.97254901959999995" alpha="1" colorSpace="deviceRGB"/>
                         </barButtonItem>
@@ -406,7 +406,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="SsH-U2-M0E"/>
+                    <navigationItem key="navigationItem" id="SsH-U2-M0E">
+                        <barButtonItem key="backBarButtonItem" title="戻る" id="fZt-fV-qlI"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="_webView" destination="iUB-8t-iZj" id="SPB-fu-YRf"/>
                         <outlet property="webview" destination="iUB-8t-iZj" id="QMG-gt-gas"/>
@@ -426,6 +428,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="jKt-f6-5gs"/>
+        <segue reference="kYI-vV-wcy"/>
     </inferredMetricsTieBreakers>
 </document>

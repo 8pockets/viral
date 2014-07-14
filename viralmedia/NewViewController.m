@@ -42,6 +42,9 @@
     self.NewContent.delegate = self;
     self.NewContent.dataSource = self;
     
+    //ヘッダー画像
+    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"title.png"]];
+    
     //カスタムセルの設定
     UINib *nib = [UINib nibWithNibName:@"CustomCell" bundle:nil];
     [self.NewContent registerNib:nib forCellReuseIdentifier:@"NewCell"];
@@ -141,7 +144,6 @@
     //カスタムセルなので、prepareforSegueは呼ばれない。
     CustomCellItems *selectitem = _items[indexPath.row];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-//    [ud setValue:[selectitem title] forKey:@"title"];
     [ud setValue:[selectitem url] forKey:@"url"];
     [ud setValue:[selectitem pageid] forKey:@"id"];
     [ud synchronize];

@@ -14,17 +14,18 @@
 {
     // Override point for customization after application launch.
     //ナビゲーションtopbarカラー
-    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.231 green:0.451 blue:0.729 alpha:1.0]];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.31 green:0.51 blue:0.89 alpha:1.0]];
     //ナビゲーションテキストカラー
     NSShadow *shadow = [[NSShadow alloc] init];
-    shadow.shadowColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8];
-    shadow.shadowOffset = CGSizeMake(0, 1);
+    shadow.shadowColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.2];
+    shadow.shadowOffset = CGSizeMake(0, 0.5);
     [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
                                                            [UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0], NSForegroundColorAttributeName,
                                                            shadow, NSShadowAttributeName,
-                                                           [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:21.0], NSFontAttributeName, nil]];
+                                                           [UIFont fontWithName:@"SinhalaSangamMN" size:15.0], NSFontAttributeName, nil]];
     //ステータスバーカラー
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
     return YES;
 }
 -(UIStatusBarStyle)preferredStatusBarStyle
