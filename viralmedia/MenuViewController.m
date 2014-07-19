@@ -114,7 +114,7 @@
         self.slidingViewController.topViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MonthNavigationController"];
     }
     else if ([menuItem isEqualToString:@"お気に入り"]) {
-        self.slidingViewController.topViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MonthNavigationController"];
+        self.slidingViewController.topViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"FavoriteNavigationController"];
     }
     else if ([menuItem isEqualToString:@"ゲーム"]) {
         self.slidingViewController.topViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MonthNavigationController"];

@@ -13,6 +13,7 @@
 #import "UIViewController+ECSlidingViewController.h"
 #import "METransitions.h"
 #import "TOWebViewController.h"
+#import "History.h"
 @interface HistoryViewController : UIViewController<ECSlidingViewControllerDelegate,UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *HistoryContent;
 @property (nonatomic, strong) METransitions *transitions;

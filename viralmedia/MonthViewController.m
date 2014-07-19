@@ -140,9 +140,23 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     //カスタムセルなので、prepareforSegueは呼ばれない。
     CustomCellItems *selectitem = _items[indexPath.row];
+    
+    // MagicalRecordイニシャライズ
+    [MagicalRecord setupCoreDataStack];
+    // データの挿入
+    History *cellRecord = [History MR_createEntity];
+    cellRecord.title = [selectitem title];
+    cellRecord.date  = [selectitem date];
+    cellRecord.view = [selectitem view];
+    cellRecord.site = [selectitem site];
+    cellRecord.url = [selectitem url];
+    cellRecord.created_at = [NSDate date];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+    
+
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    [ud setValue:[selectitem title] forKey:@"title"];
     [ud setValue:[selectitem url] forKey:@"url"];
+    [ud setValue:[selectitem pageid] forKey:@"id"];
     [ud synchronize];
     
     NSURL *url = [NSURL URLWithString:[selectitem url]];
@@ -176,7 +190,7 @@
 - (void)refreshDidTriggerRefresh:(RHRefreshControl *)refreshControl {
     self.loading = YES;
 	
-	[self performSelector:@selector(_fakeLoadComplete) withObject:nil afterDelay:2.0];
+	[self performSelector:@selector(_fakeLoadComplete) withObject:nil afterDelay:0];
 }
 
 - (BOOL)refreshDataSourceIsLoading:(RHRefreshControl *)refreshControl {

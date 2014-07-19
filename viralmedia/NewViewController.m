@@ -11,6 +11,8 @@
 @interface NewViewController (){
     NSMutableArray *_items;
     CustomCellItems *_item;
+    NSInteger cellCheckNumber;
+    NSString *_ADstring;
 }
 @end
 
@@ -96,12 +98,38 @@
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
     
+    /*
+     *メディアキーを指定します。管理画面内にて確認できるメディアキーを指定しないと成果が取得できません。
+     */
+    [appCCloud setupAppCWithMediaKey:@"f64a6c161dcc6f01840dee0a09024f22bf296516" option:APPC_CLOUD_AD];
+    
+    [appCCloud matchAppStartWithDelegate:self count:3];
+    
+}
+
+- (void)viewDidUnload {
+    [appCCloud matchAppStop];
+    
+    [super viewDidUnload];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+//広告のデリゲートメソッド
+- (void)onGetMatchAppWithIndex:(NSInteger)index
+                       appName:(NSString *)app_name
+                   description:(NSString *)description
+                       caption:(NSString *)caption
+                          icon:(UIImage *)icon
+                        banner:(UIImage *)banner
+{
+    _ADstring = description;
+    NSLog(@"%@",_ADstring);
+    //[appCCloud matchAppRegistWithControl:_ADstring index:0];
+    
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -125,7 +153,12 @@
     cell.site.text = [item site];
     NSString *viewtext = [[item view] stringByAppendingString:@" likes"];
     cell.view.text = viewtext;
-    
+    if (indexPath.row == 4) {
+        cell.title.text = _ADstring;
+        cell.site.text = @"[PR]";
+        cell.view.text = @"3 likes";
+        //[appCCloud matchAppRegistWithControl:cell index:0];
+    }
     // For even
     if (indexPath.row % 2 == 0) {
         cell.backgroundColor = [UIColor whiteColor];
@@ -134,23 +167,44 @@
     else {
         cell.backgroundColor = [UIColor colorWithRed:0.949 green:0.949 blue:0.949 alpha:1.0];
     }
-
+    
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    CustomCellItems *selectitem = _items[indexPath.row];
+    
+    cellCheckNumber = indexPath.row;
+
     // 選択状態の解除
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     //カスタムセルなので、prepareforSegueは呼ばれない。
-    CustomCellItems *selectitem = _items[indexPath.row];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     [ud setValue:[selectitem url] forKey:@"url"];
+    [ud setValue:[selectitem title] forKey:@"title"];
+    [ud setValue:[selectitem date] forKey:@"date"];
+    [ud setValue:[selectitem view] forKey:@"view"];
+    [ud setValue:[selectitem site] forKey:@"site"];
     [ud setValue:[selectitem pageid] forKey:@"id"];
     [ud synchronize];
     
     NSURL *url = [NSURL URLWithString:[selectitem url]];
     TOWebViewController *webViewController = [[TOWebViewController alloc] initWithURL:url];
     [self.navigationController pushViewController:webViewController animated:YES];
+    
+    // MagicalRecordイニシャライズ
+    [MagicalRecord setupCoreDataStack];
+    // データの挿入
+    History *cellRecord = [History MR_createEntity];
+    cellRecord.title = [selectitem title];
+    cellRecord.date  = [selectitem date];
+    cellRecord.view = [selectitem view];
+    cellRecord.site = [selectitem site];
+    cellRecord.url = [selectitem url];
+    cellRecord.pageid =[selectitem pageid];
+    cellRecord.created_at = [NSDate date];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+
 }
 
 - (IBAction)menuButtonTapped:(id)sender {
@@ -175,7 +229,7 @@
 - (void)refreshDidTriggerRefresh:(RHRefreshControl *)refreshControl {
     self.loading = YES;
 	
-	[self performSelector:@selector(_fakeLoadComplete) withObject:nil afterDelay:2.0];
+	[self performSelector:@selector(_fakeLoadComplete) withObject:nil afterDelay:0];
 }
 
 - (BOOL)refreshDataSourceIsLoading:(RHRefreshControl *)refreshControl {
@@ -187,8 +241,7 @@
 - (void) _fakeLoadComplete {
     self.loading = NO;
     [self.refreshControl refreshScrollViewDataSourceDidFinishedLoading:self.NewContent];
-    
-    NSLog(@"%@",@"DATA REQUEST!!!");
+
     _items = [[NSMutableArray alloc] init];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
@@ -237,4 +290,5 @@
     //データ取得終了
     //[self.NewContent performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
 }
+
 @end

@@ -12,11 +12,13 @@
 #import "ECSlidingViewController.h"
 #import "UIViewController+ECSlidingViewController.h"
 #import "METransitions.h"
-//#import "UIScrollView+UzysAnimatedGifPullToRefresh.h"
 #import "AFNetworking.h"
 #import "RHRefreshControl.h"
 #import "TOWebViewController.h"
-@interface NewViewController : UIViewController<ECSlidingViewControllerDelegate,UITableViewDataSource,UITableViewDelegate,RHRefreshControlDelegate>
+#import "appCCloud.h"
+#import "History.h"
+
+@interface NewViewController : UIViewController<ECSlidingViewControllerDelegate,UITableViewDataSource,UITableViewDelegate,RHRefreshControlDelegate,appCMatchAppDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *NewContent;
 @property (nonatomic, strong) METransitions *transitions;
 @property (nonatomic, strong) RHRefreshControl *refreshControl;

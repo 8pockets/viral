@@ -22,10 +22,13 @@
     [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
                                                            [UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0], NSForegroundColorAttributeName,
                                                            shadow, NSShadowAttributeName,
-                                                           [UIFont fontWithName:@"SinhalaSangamMN" size:15.0], NSFontAttributeName, nil]];
+                                                           [UIFont fontWithName:@"SinhalaSangamMN" size:17.0], NSFontAttributeName, nil]];
     //ステータスバーカラー
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
+    //CoreData-MagicalRecordイニシャライズ
+    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"History.sqlite"];
+    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"Favorite.sqlite"];
     return YES;
 }
 -(UIStatusBarStyle)preferredStatusBarStyle
@@ -57,6 +60,9 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    
+    //CoreData-MagicalRecord
+    [MagicalRecord cleanUp];
 }
 
 @end

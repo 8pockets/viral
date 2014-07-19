@@ -16,6 +16,8 @@
 #import "AFNetworking.h"
 #import "RHRefreshControl.h"
 #import "TOWebViewController.h"
+#import "History.h"
+
 @interface MonthViewController : UIViewController<ECSlidingViewControllerDelegate,UITableViewDataSource,UITableViewDelegate,RHRefreshControlDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *MonthContent;
 @property (nonatomic, strong) METransitions *transitions;

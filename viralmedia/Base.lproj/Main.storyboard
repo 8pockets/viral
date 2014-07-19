@@ -418,6 +418,81 @@
             </objects>
             <point key="canvasLocation" x="1742" y="130"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="8eL-CQ-LlJ">
+            <objects>
+                <navigationController storyboardIdentifier="FavoriteNavigationController" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="PTs-sG-ddd" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="quc-gv-HLC">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.95686274510000002" green="0.96470588239999999" blue="0.97254901959999995" alpha="1" colorSpace="deviceRGB"/>
+                    </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="7E9-wl-lZN">
+                        <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="tOX-J4-cBo" kind="relationship" relationship="rootViewController" id="Cpc-qU-yt8"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dMl-Lo-SAX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="537" y="2915"/>
+        </scene>
+        <!--Favorite View Controller - ブックマーク-->
+        <scene sceneID="IHX-iy-wZ4">
+            <objects>
+                <viewController id="tOX-J4-cBo" customClass="FavoriteViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="V39-58-zkt"/>
+                        <viewControllerLayoutGuide type="bottom" id="F7a-wm-VfF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="p12-ER-OZz">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="lpK-dS-9AB">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="favoriteCell" id="d9Z-PA-aWi">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="d9Z-PA-aWi" id="2z4-mv-1CN">
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="tOX-J4-cBo" id="O14-nY-stZ"/>
+                                    <outlet property="delegate" destination="tOX-J4-cBo" id="XGw-Jh-W0C"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="ブックマーク" id="0Of-lq-vhF">
+                        <barButtonItem key="backBarButtonItem" title="戻る" id="QOH-Ly-dTm">
+                            <color key="tintColor" red="0.95686274510000002" green="0.96470588239999999" blue="0.97254901959999995" alpha="1" colorSpace="deviceRGB"/>
+                        </barButtonItem>
+                        <barButtonItem key="leftBarButtonItem" image="menu.png" id="UhA-ln-Fjc">
+                            <color key="tintColor" red="0.95686274510000002" green="0.96470588239999999" blue="0.97254901959999995" alpha="1" colorSpace="deviceRGB"/>
+                            <connections>
+                                <action selector="menuButtonTapped:" destination="tOX-J4-cBo" id="3IV-sM-siS"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="FavoriteContent" destination="lpK-dS-9AB" id="0pm-bE-wdL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="o0P-2j-lOd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1006" y="2915"/>
+        </scene>
     </scenes>
     <resources>
         <image name="menu.png" width="44" height="44"/>
@@ -428,6 +503,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="kYI-vV-wcy"/>
+        <segue reference="jKt-f6-5gs"/>
     </inferredMetricsTieBreakers>
 </document>

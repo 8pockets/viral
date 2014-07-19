@@ -9,7 +9,7 @@
 #import "HistoryViewController.h"
 
 @interface HistoryViewController (){
-    NSMutableArray *_items;
+    NSArray *_items;
     CustomCellItems *_item;
 }
 
@@ -74,18 +74,10 @@
     _items = [[NSMutableArray alloc] init];
     _item = [[CustomCellItems alloc] init];
     
-    //初期データ OR 保存していたデータ読み込み
-    NSUserDefaults *HistorySave = [NSUserDefaults standardUserDefaults];
-    _items = [[NSMutableArray alloc] init];
-    _item = [[CustomCellItems alloc] init];
-    if ([HistorySave arrayForKey:@"HistorySave"]) {
-        NSLog(@"%@",@"DATA!!!");
-        NSLog(@"%@",[HistorySave arrayForKey:@"HistorySave"]);
-        for (NSData *object in [HistorySave arrayForKey:@"HistorySave"]) {
-            NSString *dataEncode = [NSKeyedUnarchiver unarchiveObjectWithData:object];
-            [_items addObject:dataEncode];
-        }
-    }
+    // イニシャライズ
+    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"History.sqlite"];
+    _items = [History MR_findAllSortedBy:@"created_at" ascending:NO];
+    NSLog(@"magicalAll count : %lu", (unsigned long)[_items count]);
     
     [super viewDidLoad];
     
@@ -126,10 +118,13 @@
     //カスタムセルなので、prepareforSegueは呼ばれない。
     CustomCellItems *selectitem = _items[indexPath.row];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    [ud setValue:[selectitem title] forKey:@"title"];
     [ud setValue:[selectitem url] forKey:@"url"];
+    [ud setValue:[selectitem pageid] forKey:@"id"];
+    [ud synchronize];
     
-    [self performSegueWithIdentifier:@"webSegueHistory" sender:selectitem];
+    NSURL *url = [NSURL URLWithString:[selectitem url]];
+    TOWebViewController *webViewController = [[TOWebViewController alloc] initWithURL:url];
+    [self.navigationController pushViewController:webViewController animated:YES];
 }
 
 - (IBAction)menuButtonTapped:(id)sender {

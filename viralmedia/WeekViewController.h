@@ -16,6 +16,8 @@
 #import "AFNetworking.h"
 #import "RHRefreshControl.h"
 #import "TOWebViewController.h"
+#import "History.h"
+
 @interface WeekViewController : UIViewController<ECSlidingViewControllerDelegate,UITableViewDataSource,UITableViewDelegate,RHRefreshControlDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *WeekContent;
 @property (nonatomic, strong) METransitions *transitions;
