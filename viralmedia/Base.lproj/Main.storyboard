@@ -114,9 +114,6 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <connections>
-                                            <segue destination="GIa-h2-4dc" kind="push" identifier="webSegue" id="U1s-Qv-HKt"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -192,9 +189,6 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <connections>
-                                            <segue destination="GIa-h2-4dc" kind="push" identifier="webSeguemonth" id="kYI-vV-wcy"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -270,9 +264,6 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <connections>
-                                            <segue destination="GIa-h2-4dc" kind="push" identifier="webSegueWeek" id="6if-7e-TsO"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -344,9 +335,6 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <connections>
-                                            <segue destination="GIa-h2-4dc" kind="push" identifier="webSegueHistory" id="jKt-f6-5gs"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -375,48 +363,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b8r-eh-DKz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1006" y="2243"/>
-        </scene>
-        <!--Web View Controller-->
-        <scene sceneID="LEL-kO-FFp">
-            <objects>
-                <viewController id="GIa-h2-4dc" customClass="WebViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="2ab-fd-iah"/>
-                        <viewControllerLayoutGuide type="bottom" id="s2I-Ww-iaQ"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Hzm-uH-jKE">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iUB-8t-iZj">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            </webView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dv7-8h-HIF">
-                                <rect key="frame" x="0.0" y="460" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <items>
-                                    <barButtonItem title="Item" id="Y1f-t2-khi"/>
-                                </items>
-                                <connections>
-                                    <outlet property="delegate" destination="GIa-h2-4dc" id="qeX-BC-yDe"/>
-                                </connections>
-                            </toolbar>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="SsH-U2-M0E">
-                        <barButtonItem key="backBarButtonItem" title="戻る" id="fZt-fV-qlI"/>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="_webView" destination="iUB-8t-iZj" id="SPB-fu-YRf"/>
-                        <outlet property="webview" destination="iUB-8t-iZj" id="QMG-gt-gas"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3bu-uX-hVv" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1742" y="130"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="8eL-CQ-LlJ">
@@ -502,7 +448,4 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="jKt-f6-5gs"/>
-    </inferredMetricsTieBreakers>
 </document>

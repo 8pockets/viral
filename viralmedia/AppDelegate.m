@@ -29,6 +29,28 @@
     //CoreData-MagicalRecordイニシャライズ
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"History.sqlite"];
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"Favorite.sqlite"];
+    
+    //Appiraterライブラリ
+    [Appirater setAppId:@"882438772"]; // アプリを追加したときに与えられる9桁の数字(Apple ID)
+    // インストール後、再びメッセージを表示するまでの日数。(デフォルト:30日)
+    [Appirater setDaysUntilPrompt: 30];
+    
+    // 再びメッセージを表示するまでの起動回数。(デフォルト:20回)
+    [Appirater setUsesUntilPrompt: 20];
+    
+    // ユーザーがアプリ内で何か特別な操作をしたときに意図的にメッセージを表示するか否か。(デフォルト:-1)
+    // 値 : -1=無効, 1=有効
+    // 表示する場合は、任意の箇所に [Appirater userDidSignificantEvent:YES] を呼ぶ。
+    [Appirater setSignificantEventsUntilPrompt: 1];
+    
+    // 「後で見る」を選択したときにメッセージを再び表示するまでの日数。(デフォルト:1日)
+    [Appirater setTimeBeforeReminding: 1];
+    
+    // デバッグモードの有無。YESにすると起動の度に表示される。(デフォルト:NO)
+    [Appirater setDebug: NO];
+
+    [Appirater appLaunched:YES];
+    
     return YES;
 }
 -(UIStatusBarStyle)preferredStatusBarStyle
@@ -50,6 +72,8 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
+    [Appirater appEnteredForeground:YES];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

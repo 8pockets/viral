@@ -82,7 +82,6 @@
  */
 +(void)matchAppRegistWithControl:(UIControl *)control
                            index:(NSInteger)index;
-
 /**
  * @brief バナー広告表示
  *

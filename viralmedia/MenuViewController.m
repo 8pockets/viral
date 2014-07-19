@@ -76,22 +76,25 @@
     
     cell.textLabel.textColor = [UIColor colorWithRed:0.957 green:0.965 blue:0.973 alpha:1.0];
     cell.textLabel.text = menuItem;
-    /*
-    if ([menuItem isEqualToString:@"HOME"]) {
-        cell.imageView.image = [UIImage imageNamed:@"matome.png"];
-    }else if ([menuItem isEqualToString:@"公式スケジュール"]){
-        cell.imageView.image = [UIImage imageNamed:@"matome.png"];
-    }else if ([menuItem isEqualToString:@"ライブ日程"]){
-        cell.imageView.image = [UIImage imageNamed:@"matome.png"];
-    }else if ([menuItem isEqualToString:@"YouTube"]){
-        cell.imageView.image = [UIImage imageNamed:@"matome.png"];
-    }else if ([menuItem isEqualToString:@"歌詞"]){
-        cell.imageView.image = [UIImage imageNamed:@"matome.png"];
-    }else if ([menuItem isEqualToString:@"アプリについて"]){
-        cell.imageView.image = [UIImage imageNamed:@"matome.png"];
-    }else if ([menuItem isEqualToString:@"Setting"]){
-        cell.imageView.image = [UIImage imageNamed:@"matome.png"];
-    }*/
+    cell.imageView.image = [UIImage imageNamed:@"action.png"];
+
+    if (indexPath.row == 0) {
+        cell.imageView.image = [UIImage imageNamed:@"action.png"];
+    }else if (indexPath.row == 1){
+        cell.imageView.image = [UIImage imageNamed:@"action.png"];
+    }else if (indexPath.row == 2){
+        cell.imageView.image = [UIImage imageNamed:@"action.png"];
+    }else if (indexPath.row == 3){
+        cell.imageView.image = [UIImage imageNamed:@"action.png"];
+    }else if (indexPath.row == 4){
+        cell.imageView.image = [UIImage imageNamed:@"action.png"];
+    }else if (indexPath.row == 5){
+        cell.imageView.image = [UIImage imageNamed:@"action.png"];
+    }else if (indexPath.row == 6){
+        cell.imageView.image = [UIImage imageNamed:@"action.png"];
+    }else if (indexPath.row == 7){
+        cell.imageView.image = [UIImage imageNamed:@"action.png"];
+    }
     
     return cell;
 }
@@ -114,6 +117,7 @@
         self.slidingViewController.topViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MonthNavigationController"];
     }
     else if ([menuItem isEqualToString:@"お気に入り"]) {
+        [Appirater userDidSignificantEvent:YES];
         self.slidingViewController.topViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"FavoriteNavigationController"];
     }
     else if ([menuItem isEqualToString:@"ゲーム"]) {

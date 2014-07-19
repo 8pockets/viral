@@ -157,7 +157,7 @@
         cell.title.text = _ADstring;
         cell.site.text = @"[PR]";
         cell.view.text = @"3 likes";
-        //[appCCloud matchAppRegistWithControl:cell index:0];
+        //[appCCloud matchAppRegistWithControl:AdButton index:0];
     }
     // For even
     if (indexPath.row % 2 == 0) {
