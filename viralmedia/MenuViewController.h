@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "UIViewController+ECSlidingViewController.h"
-#import "Appirater.h"
 
 @interface MenuViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *menutable;

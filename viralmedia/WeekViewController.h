@@ -14,14 +14,11 @@
 #import "METransitions.h"
 //#import "UIScrollView+UzysAnimatedGifPullToRefresh.h"
 #import "AFNetworking.h"
-#import "RHRefreshControl.h"
 #import "TOWebViewController.h"
 #import "History.h"
-
-@interface WeekViewController : UIViewController<ECSlidingViewControllerDelegate,UITableViewDataSource,UITableViewDelegate,RHRefreshControlDelegate>
+#import "BDBSpinKitRefreshControl.h"
+@interface WeekViewController : UIViewController<ECSlidingViewControllerDelegate,UITableViewDataSource,UITableViewDelegate,BDBSpinKitRefreshControlDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *WeekContent;
 @property (nonatomic, strong) METransitions *transitions;
-@property (nonatomic, strong) RHRefreshControl *refreshControl;
-@property (nonatomic, assign, getter = isLoading) BOOL loading;
 
 @end

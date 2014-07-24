@@ -13,14 +13,12 @@
 #import "UIViewController+ECSlidingViewController.h"
 #import "METransitions.h"
 #import "AFNetworking.h"
-#import "RHRefreshControl.h"
 #import "TOWebViewController.h"
 #import "appCCloud.h"
 #import "History.h"
+#import "BDBSpinKitRefreshControl.h"
+@interface NewViewController : UIViewController<ECSlidingViewControllerDelegate,UITableViewDataSource,UITableViewDelegate,appCMatchAppDelegate,BDBSpinKitRefreshControlDelegate>
 
-@interface NewViewController : UIViewController<ECSlidingViewControllerDelegate,UITableViewDataSource,UITableViewDelegate,RHRefreshControlDelegate,appCMatchAppDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *NewContent;
 @property (nonatomic, strong) METransitions *transitions;
-@property (nonatomic, strong) RHRefreshControl *refreshControl;
-@property (nonatomic, assign, getter = isLoading) BOOL loading;
 @end

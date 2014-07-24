@@ -5,7 +5,7 @@
 //  Created by 8pockets on 2014/06/27.
 //  Copyright (c) 2014年 YamauchiShingo. All rights reserved.
 //
-
+static void * const kKVOContext = (void *)&kKVOContext;
 #import "NewViewController.h"
 
 @interface NewViewController (){
@@ -14,6 +14,8 @@
     NSInteger cellCheckNumber;
     NSString *_ADstring;
 }
+@property (nonatomic) BDBSpinKitRefreshControl *refreshControl;
+@property (nonatomic) NSTimer *colorTimer;
 @end
 
 @implementation NewViewController
@@ -85,18 +87,13 @@
     [self.navigationController.view addGestureRecognizer:self.slidingViewController.panGesture];
     
     //RefreshControl設定
-    RHRefreshControlConfiguration *refreshConfiguration = [[RHRefreshControlConfiguration alloc] init];
-    refreshConfiguration.refreshView = RHRefreshViewStylePinterest;
-    //  refreshConfiguration.minimumForStart = @0;
-    //  refreshConfiguration.maximumForPull = @120;
-    self.refreshControl = [[RHRefreshControl alloc] initWithConfiguration:refreshConfiguration];
+    UIColor *color = [UIColor colorWithRed:0.937f green:0.263f blue:0.157f alpha:1.0f];
+    self.refreshControl = [BDBSpinKitRefreshControl refreshControlWithStyle:RTSpinKitViewStyleBounce
+                                                                      color:color];
     self.refreshControl.delegate = self;
-    [self.refreshControl attachToScrollView:self.NewContent];
-    self.NewContent.backgroundColor = [UIColor colorWithWhite:0.88 alpha:1.0];
-    
-    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
-        self.automaticallyAdjustsScrollViewInsets = NO;
-    }
+    self.refreshControl.shouldChangeColorInstantly = YES;
+    [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    [self.NewContent addSubview:_refreshControl];
     
     /*
      *メディアキーを指定します。管理画面内にて確認できるメディアキーを指定しないと成果が取得できません。
@@ -118,6 +115,26 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+//Refresh Controll
+- (void)didShowRefreshControl {
+    self.colorTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f
+                                                       target:self
+                                                     selector:@selector(doubleRainbow)
+                                                     userInfo:nil
+                                                      repeats:YES];
+}
+
+- (void)didHideRefreshControl {
+    [self.colorTimer invalidate];
+}
+
+- (void)doubleRainbow {
+    CGFloat h, s, v, a;
+    [self.refreshControl.tintColor getHue:&h saturation:&s brightness:&v alpha:&a];
+    h = fmodf((h + 0.025f), 1.0f);
+    self.refreshControl.tintColor = [UIColor colorWithHue:h saturation:s brightness:v alpha:a];
+}
+
 //広告のデリゲートメソッド
 - (void)onGetMatchAppWithIndex:(NSInteger)index
                        appName:(NSString *)app_name
@@ -211,37 +228,7 @@
     [self.slidingViewController anchorTopViewToRightAnimated:YES];
 }
 
-//PullToRefresh
-
-#pragma mark - TableView ScrollView
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-	
-	[self.refreshControl refreshScrollViewDidScroll:scrollView];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-	
-	[self.refreshControl refreshScrollViewDidEndDragging:scrollView];
-	
-}
-
-#pragma mark - RHRefreshControl Delegate
-- (void)refreshDidTriggerRefresh:(RHRefreshControl *)refreshControl {
-    self.loading = YES;
-	
-	[self performSelector:@selector(_fakeLoadComplete) withObject:nil afterDelay:0];
-}
-
-- (BOOL)refreshDataSourceIsLoading:(RHRefreshControl *)refreshControl {
-
-    return self.isLoading; // should return if data source model is reloading
-
-}
-
-- (void) _fakeLoadComplete {
-    self.loading = NO;
-    [self.refreshControl refreshScrollViewDataSourceDidFinishedLoading:self.NewContent];
-
+- (void)refresh {
     _items = [[NSMutableArray alloc] init];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
@@ -287,8 +274,10 @@
              // エラーの場合はエラーの内容をコンソールに出力する
              NSLog(@"Error: %@", error);
          }];
-    //データ取得終了
-    //[self.NewContent performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.refreshControl endRefreshing];
+    });
 }
 
 @end

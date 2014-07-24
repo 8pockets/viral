@@ -12,7 +12,8 @@
     NSMutableArray *_items;
     CustomCellItems *_item;
 }
-
+@property (nonatomic) BDBSpinKitRefreshControl *refreshControl;
+@property (nonatomic) NSTimer *colorTimer;
 @end
 
 @implementation MonthViewController
@@ -79,18 +80,13 @@
     }
     
     //RefreshControl設定
-    RHRefreshControlConfiguration *refreshConfiguration = [[RHRefreshControlConfiguration alloc] init];
-    refreshConfiguration.refreshView = RHRefreshViewStylePinterest;
-    //  refreshConfiguration.minimumForStart = @0;
-    //  refreshConfiguration.maximumForPull = @120;
-    self.refreshControl = [[RHRefreshControl alloc] initWithConfiguration:refreshConfiguration];
+    UIColor *color = [UIColor colorWithRed:0.937f green:0.263f blue:0.157f alpha:1.0f];
+    self.refreshControl = [BDBSpinKitRefreshControl refreshControlWithStyle:RTSpinKitViewStyleBounce
+                                                                      color:color];
     self.refreshControl.delegate = self;
-    [self.refreshControl attachToScrollView:self.MonthContent];
-    self.MonthContent.backgroundColor = [UIColor colorWithWhite:0.88 alpha:1.0];
-    
-    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
-        self.automaticallyAdjustsScrollViewInsets = NO;
-    }
+    self.refreshControl.shouldChangeColorInstantly = YES;
+    [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    [self.MonthContent addSubview:_refreshControl];
     
     [super viewDidLoad];
 }
@@ -100,6 +96,26 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+//Refresh Controll
+- (void)didShowRefreshControl {
+    self.colorTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f
+                                                       target:self
+                                                     selector:@selector(doubleRainbow)
+                                                     userInfo:nil
+                                                      repeats:YES];
+}
+
+- (void)didHideRefreshControl {
+    [self.colorTimer invalidate];
+}
+
+- (void)doubleRainbow {
+    CGFloat h, s, v, a;
+    [self.refreshControl.tintColor getHue:&h saturation:&s brightness:&v alpha:&a];
+    h = fmodf((h + 0.025f), 1.0f);
+    self.refreshControl.tintColor = [UIColor colorWithHue:h saturation:s brightness:v alpha:a];
+}
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -170,37 +186,9 @@
 - (IBAction)menuButtonTapped:(id)sender {
     [self.slidingViewController anchorTopViewToRightAnimated:YES];
 }
-//PullToRequest
 
-#pragma mark - TableView ScrollView
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-	
-	[self.refreshControl refreshScrollViewDidScroll:scrollView];
-    
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-	
-	[self.refreshControl refreshScrollViewDidEndDragging:scrollView];
-	
-}
-
-#pragma mark - RHRefreshControl Delegate
-- (void)refreshDidTriggerRefresh:(RHRefreshControl *)refreshControl {
-    self.loading = YES;
-	
-	[self performSelector:@selector(_fakeLoadComplete) withObject:nil afterDelay:0];
-}
-
-- (BOOL)refreshDataSourceIsLoading:(RHRefreshControl *)refreshControl {
-    return self.isLoading; // should return if data source model is reloading
-}
-
-- (void) _fakeLoadComplete {
-    self.loading = NO;
-    [self.refreshControl refreshScrollViewDataSourceDidFinishedLoading:self.MonthContent];
-    
+- (void)refresh {
     _items = [[NSMutableArray alloc] init];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
@@ -219,9 +207,10 @@
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              // 通信に成功した場合の処理
-             _items = [[NSMutableArray alloc] init];
+             //_items = [[NSMutableArray alloc] init];
              for (NSDictionary *json in responseObject) {
                  _item = [[CustomCellItems alloc] init];
+                 _item.pageid = [json objectForKey:@"id"];
                  _item.title = [json objectForKey:@"title"];
                  _item.url = [json objectForKey:@"url"];
                  _item.date = [json objectForKey:@"published_at"];
@@ -231,21 +220,24 @@
              }
              [self.MonthContent reloadData];
              
-             NSUserDefaults *Monthsave = [NSUserDefaults standardUserDefaults];
+             NSUserDefaults *Newsave = [NSUserDefaults standardUserDefaults];
              NSMutableArray *archivearray = [NSMutableArray arrayWithCapacity:_items.count];
              for (NSDictionary *object in _items) {
                  NSData *dataEncode = [NSKeyedArchiver archivedDataWithRootObject:object];
                  [archivearray addObject:dataEncode];
              }
-             [Monthsave setObject:archivearray forKey:@"Monthsave"];
-             [Monthsave synchronize];
+             [Newsave setObject:archivearray forKey:@"Newsave"];
+             [Newsave synchronize];
+             
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              // エラーの場合はエラーの内容をコンソールに出力する
              NSLog(@"Error: %@", error);
          }];
-    //データ取得終了
-    [self.MonthContent performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.refreshControl endRefreshing];
+    });
 }
 
 @end

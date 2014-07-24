@@ -14,13 +14,10 @@
 #import "METransitions.h"
 //#import "UIScrollView+UzysAnimatedGifPullToRefresh.h"
 #import "AFNetworking.h"
-#import "RHRefreshControl.h"
 #import "TOWebViewController.h"
 #import "History.h"
-
-@interface MonthViewController : UIViewController<ECSlidingViewControllerDelegate,UITableViewDataSource,UITableViewDelegate,RHRefreshControlDelegate>
+#import "BDBSpinKitRefreshControl.h"
+@interface MonthViewController : UIViewController<ECSlidingViewControllerDelegate,UITableViewDataSource,UITableViewDelegate,BDBSpinKitRefreshControlDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *MonthContent;
 @property (nonatomic, strong) METransitions *transitions;
-@property (nonatomic, strong) RHRefreshControl *refreshControl;
-@property (nonatomic, assign, getter = isLoading) BOOL loading;
 @end

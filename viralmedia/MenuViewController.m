@@ -63,7 +63,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [self.menuItems count];
+    return 7;
 }
 
 
@@ -77,6 +77,7 @@
     cell.textLabel.textColor = [UIColor colorWithRed:0.957 green:0.965 blue:0.973 alpha:1.0];
     cell.textLabel.text = menuItem;
     cell.imageView.image = [UIImage imageNamed:@"action.png"];
+    cell.backgroundColor = [UIColor darkGrayColor];
 
     if (indexPath.row == 0) {
         cell.imageView.image = [UIImage imageNamed:@"action.png"];
@@ -117,7 +118,6 @@
         self.slidingViewController.topViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MonthNavigationController"];
     }
     else if ([menuItem isEqualToString:@"お気に入り"]) {
-        [Appirater userDidSignificantEvent:YES];
         self.slidingViewController.topViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"FavoriteNavigationController"];
     }
     else if ([menuItem isEqualToString:@"ゲーム"]) {

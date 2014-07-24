@@ -47,7 +47,7 @@
     [Appirater setTimeBeforeReminding: 1];
     
     // デバッグモードの有無。YESにすると起動の度に表示される。(デフォルト:NO)
-    [Appirater setDebug: NO];
+    [Appirater setDebug: YES];
 
     [Appirater appLaunched:YES];
     
