@@ -129,7 +129,7 @@
                         <barButtonItem key="backBarButtonItem" title="戻る" id="DQW-lp-BtM">
                             <color key="tintColor" red="0.95686274510000002" green="0.96470588239999999" blue="0.97254901959999995" alpha="1" colorSpace="deviceRGB"/>
                         </barButtonItem>
-                        <barButtonItem key="leftBarButtonItem" image="menu.png" id="Wyt-8r-abL">
+                        <barButtonItem key="leftBarButtonItem" image="navmenu.png" id="Wyt-8r-abL">
                             <color key="tintColor" red="0.95686274510000002" green="0.96470588239999999" blue="0.97254901959999995" alpha="1" colorSpace="deviceRGB"/>
                             <connections>
                                 <action selector="menuButtonTapped:" destination="uRJ-hg-pFY" id="Kgv-nh-rXY"/>
@@ -204,7 +204,7 @@
                         <barButtonItem key="backBarButtonItem" title="戻る" id="fYn-h1-0JB">
                             <color key="tintColor" red="0.95686274510000002" green="0.96470588239999999" blue="0.97254901959999995" alpha="1" colorSpace="deviceRGB"/>
                         </barButtonItem>
-                        <barButtonItem key="leftBarButtonItem" image="menu.png" id="XEq-uz-ePt">
+                        <barButtonItem key="leftBarButtonItem" image="navmenu.png" id="XEq-uz-ePt">
                             <color key="tintColor" red="0.95686274510000002" green="0.96470588239999999" blue="0.97254901959999995" alpha="1" colorSpace="deviceRGB"/>
                             <connections>
                                 <action selector="menuButtonTapped:" destination="kRs-QH-Oes" id="2yy-0C-baG"/>
@@ -275,7 +275,7 @@
                         <barButtonItem key="backBarButtonItem" title="戻る" id="mLu-tZ-gsC">
                             <color key="tintColor" red="0.95686274510000002" green="0.96470588239999999" blue="0.97254901959999995" alpha="1" colorSpace="deviceRGB"/>
                         </barButtonItem>
-                        <barButtonItem key="leftBarButtonItem" image="menu.png" id="cRW-xe-Nz3">
+                        <barButtonItem key="leftBarButtonItem" image="navmenu.png" id="cRW-xe-Nz3">
                             <color key="tintColor" red="0.95686274510000002" green="0.96470588239999999" blue="0.97254901959999995" alpha="1" colorSpace="deviceRGB"/>
                             <connections>
                                 <action selector="menuButtonTapped:" destination="T3l-Gf-D6K" id="Hap-5n-xwh"/>
@@ -350,7 +350,7 @@
                         <barButtonItem key="backBarButtonItem" title="戻る" id="CLM-0Y-Tv0">
                             <color key="tintColor" red="0.95686274510000002" green="0.96470588239999999" blue="0.97254901959999995" alpha="1" colorSpace="deviceRGB"/>
                         </barButtonItem>
-                        <barButtonItem key="leftBarButtonItem" image="menu.png" id="NQ9-px-n0D">
+                        <barButtonItem key="leftBarButtonItem" image="navmenu.png" id="NQ9-px-n0D">
                             <color key="tintColor" red="0.95686274510000002" green="0.96470588239999999" blue="0.97254901959999995" alpha="1" colorSpace="deviceRGB"/>
                             <connections>
                                 <action selector="menuButtonTapped:" destination="4JL-uR-qvN" id="MLF-dg-x7b"/>
@@ -425,7 +425,7 @@
                         <barButtonItem key="backBarButtonItem" title="戻る" id="QOH-Ly-dTm">
                             <color key="tintColor" red="0.95686274510000002" green="0.96470588239999999" blue="0.97254901959999995" alpha="1" colorSpace="deviceRGB"/>
                         </barButtonItem>
-                        <barButtonItem key="leftBarButtonItem" image="menu.png" id="UhA-ln-Fjc">
+                        <barButtonItem key="leftBarButtonItem" image="navmenu.png" id="UhA-ln-Fjc">
                             <color key="tintColor" red="0.95686274510000002" green="0.96470588239999999" blue="0.97254901959999995" alpha="1" colorSpace="deviceRGB"/>
                             <connections>
                                 <action selector="menuButtonTapped:" destination="tOX-J4-cBo" id="3IV-sM-siS"/>
@@ -442,7 +442,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="menu.png" width="44" height="44"/>
+        <image name="navmenu.png" width="44" height="44"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

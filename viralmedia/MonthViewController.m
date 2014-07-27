@@ -75,7 +75,7 @@
         NSLog(@"%@",@"NO DATA!!!");
         _item = [[CustomCellItems alloc] init];
         _items = [[NSMutableArray alloc] init];
-        _item.title = @"下に引き伸ばして更新！";
+        _item.title = @"↓下に引き伸ばして更新！";
         [_items addObject:_item];
     }
     
@@ -226,7 +226,7 @@
                  NSData *dataEncode = [NSKeyedArchiver archivedDataWithRootObject:object];
                  [archivearray addObject:dataEncode];
              }
-             [Newsave setObject:archivearray forKey:@"Newsave"];
+             [Newsave setObject:archivearray forKey:@"Monthsave"];
              [Newsave synchronize];
              
          }
@@ -235,7 +235,7 @@
              NSLog(@"Error: %@", error);
          }];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.refreshControl endRefreshing];
     });
 }

@@ -14,10 +14,10 @@
 #import "METransitions.h"
 #import "AFNetworking.h"
 #import "TOWebViewController.h"
-#import "appCCloud.h"
 #import "History.h"
 #import "BDBSpinKitRefreshControl.h"
-@interface NewViewController : UIViewController<ECSlidingViewControllerDelegate,UITableViewDataSource,UITableViewDelegate,appCMatchAppDelegate,BDBSpinKitRefreshControlDelegate>
+
+@interface NewViewController : UIViewController<ECSlidingViewControllerDelegate,UITableViewDataSource,UITableViewDelegate,BDBSpinKitRefreshControlDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *NewContent;
 @property (nonatomic, strong) METransitions *transitions;

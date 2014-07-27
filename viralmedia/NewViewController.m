@@ -5,17 +5,17 @@
 //  Created by 8pockets on 2014/06/27.
 //  Copyright (c) 2014年 YamauchiShingo. All rights reserved.
 //
-static void * const kKVOContext = (void *)&kKVOContext;
 #import "NewViewController.h"
 
 @interface NewViewController (){
     NSMutableArray *_items;
     CustomCellItems *_item;
     NSInteger cellCheckNumber;
-    NSString *_ADstring;
 }
 @property (nonatomic) BDBSpinKitRefreshControl *refreshControl;
 @property (nonatomic) NSTimer *colorTimer;
+@property (nonatomic) NSString *adtitle;
+@property (nonatomic) NSInteger *adindex;
 @end
 
 @implementation NewViewController
@@ -47,12 +47,15 @@ static void * const kKVOContext = (void *)&kKVOContext;
     self.NewContent.dataSource = self;
     
     //ヘッダー画像
-    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"title.png"]];
+    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"navtitle.png"]];
     
     //カスタムセルの設定
     UINib *nib = [UINib nibWithNibName:@"CustomCell" bundle:nil];
-    [self.NewContent registerNib:nib forCellReuseIdentifier:@"NewCell"];
-    [self.searchDisplayController.searchResultsTableView registerNib:nib forCellReuseIdentifier:@"NewCell"];
+    [self.NewContent registerNib:nib forCellReuseIdentifier:@"CustomCell"];
+    [self.searchDisplayController.searchResultsTableView registerNib:nib forCellReuseIdentifier:@"CustomCell"];
+    
+//    [self.NewContent registerNib:[UINib nibWithNibName:@"cpiad1" bundle:nil] forCellReuseIdentifier:@"NewCell"];
+//    [self.searchDisplayController.searchResultsTableView registerNib:[UINib nibWithNibName:@"cpiad1" bundle:nil] forCellReuseIdentifier:@"NewCell"];
     
     //初期データ OR 保存していたデータ読み込み
     NSUserDefaults *Newsave = [NSUserDefaults standardUserDefaults];
@@ -68,7 +71,7 @@ static void * const kKVOContext = (void *)&kKVOContext;
         NSLog(@"%@",@"NO DATA!!!");
         _item = [[CustomCellItems alloc] init];
         _items = [[NSMutableArray alloc] init];
-        _item.title = @"下に引き伸ばして更新！";
+        _item.title = @"↓下に引き伸ばして更新！";
         _item.url = @"";
         [_items addObject:_item];
     }
@@ -95,20 +98,8 @@ static void * const kKVOContext = (void *)&kKVOContext;
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
     [self.NewContent addSubview:_refreshControl];
     
-    /*
-     *メディアキーを指定します。管理画面内にて確認できるメディアキーを指定しないと成果が取得できません。
-     */
-    [appCCloud setupAppCWithMediaKey:@"f64a6c161dcc6f01840dee0a09024f22bf296516" option:APPC_CLOUD_AD];
-    
-    [appCCloud matchAppStartWithDelegate:self count:3];
-    
 }
 
-- (void)viewDidUnload {
-    [appCCloud matchAppStop];
-    
-    [super viewDidUnload];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -135,19 +126,6 @@ static void * const kKVOContext = (void *)&kKVOContext;
     self.refreshControl.tintColor = [UIColor colorWithHue:h saturation:s brightness:v alpha:a];
 }
 
-//広告のデリゲートメソッド
-- (void)onGetMatchAppWithIndex:(NSInteger)index
-                       appName:(NSString *)app_name
-                   description:(NSString *)description
-                       caption:(NSString *)caption
-                          icon:(UIImage *)icon
-                        banner:(UIImage *)banner
-{
-    _ADstring = description;
-    NSLog(@"%@",_ADstring);
-    //[appCCloud matchAppRegistWithControl:_ADstring index:0];
-    
-}
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -162,7 +140,7 @@ static void * const kKVOContext = (void *)&kKVOContext;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"NewCell";
+    static NSString *CellIdentifier = @"CustomCell";
     CustomCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     CustomCellItems *item = _items[indexPath.row];
     cell.title.text = [item title];
@@ -170,12 +148,47 @@ static void * const kKVOContext = (void *)&kKVOContext;
     cell.site.text = [item site];
     NSString *viewtext = [[item view] stringByAppendingString:@" likes"];
     cell.view.text = viewtext;
-//    if (indexPath.row == 4) {
-//        cell.title.text = _ADstring;
-//        cell.site.text = @"[PR]";
-//        cell.view.text = @"3 likes";
-//        //[appCCloud matchAppRegistWithControl:AdButton index:0];
+    
+//    switch (indexPath.row) {
+//        case 4:
+//            static NSString* CellIdentifier = @"cpiad1";
+//            break;
+//        default:
+//            static NSString* CellIdentifier = @"NewCell";
+//            break;
 //    }
+//    UITableViewCell *cell = [self.NewContent dequeueReusableCellWithIdentifier:CellIdentifier];
+//    if (cell == nil) {
+//        switch (indexPath.row) {
+//            case 4:
+//                cell = [[cpiad1 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+//                break;
+//            default:
+//                cell = [[CustomCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
+//                break;
+//        }
+//    }
+//    
+//    // Configure the cell…
+//    switch (indexPath.row) {
+//        case 4:
+//        {
+//            cpiad1 *cpiad = (cpiad1 *)cell;
+//            cpiad.textLabel.text = @"広告がここにはいります";
+//        }
+//            break;
+//        default:
+//        {
+//            CustomCell *defaultcell = (CustomCell *)cell;
+//            CustomCellItems *item = _items[indexPath.row];
+//            defaultcell.title.text = [item title];
+//            defaultcell.date.text = [item date];
+//            defaultcell.site.text = [item site];
+//            NSString *viewtext = [[item view] stringByAppendingString:@" likes"];
+//            defaultcell.view.text = viewtext;
+//        }
+//    }
+    
     // For even
     if (indexPath.row % 2 == 0) {
         cell.backgroundColor = [UIColor whiteColor];
@@ -273,9 +286,10 @@ static void * const kKVOContext = (void *)&kKVOContext;
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              // エラーの場合はエラーの内容をコンソールに出力する
              NSLog(@"Error: %@", error);
+             [self.refreshControl endRefreshing];
          }];
 
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.refreshControl endRefreshing];
     });
 }

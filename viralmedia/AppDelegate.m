@@ -14,7 +14,7 @@
 {
     // Override point for customization after application launch.
     //ナビゲーションtopbarカラー
-    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.31 green:0.51 blue:0.89 alpha:1.0]];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.99 green:0.67 blue:0.25 alpha:1.0]];
     //ナビゲーションテキストカラー
     NSShadow *shadow = [[NSShadow alloc] init];
     shadow.shadowColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.2];
@@ -47,7 +47,7 @@
     [Appirater setTimeBeforeReminding: 1];
     
     // デバッグモードの有無。YESにすると起動の度に表示される。(デフォルト:NO)
-    [Appirater setDebug: YES];
+    [Appirater setDebug: NO];
 
     [Appirater appLaunched:YES];
     

@@ -36,8 +36,8 @@
     
     //セパレーターの色
     [self.menutable setSeparatorColor:[UIColor colorWithRed:0.45 green:0.45 blue:0.45 alpha:1.0]];
-    //フッターの要らない部分削除
-    //self.menutable.tableFooterView = [[UIView alloc] init];
+    //リストビュー広告
+    [appCCloud setupAppCWithMediaKey:@"f64a6c161dcc6f01840dee0a09024f22bf296516" option:APPC_CLOUD_AD];
 }
 
 - (void)didReceiveMemoryWarning
@@ -80,23 +80,20 @@
     cell.backgroundColor = [UIColor darkGrayColor];
 
     if (indexPath.row == 0) {
-        cell.imageView.image = [UIImage imageNamed:@"action.png"];
+        cell.imageView.image = [UIImage imageNamed:@"menu1.png"];
     }else if (indexPath.row == 1){
-        cell.imageView.image = [UIImage imageNamed:@"action.png"];
+        cell.imageView.image = [UIImage imageNamed:@"menu4.png"];
     }else if (indexPath.row == 2){
-        cell.imageView.image = [UIImage imageNamed:@"action.png"];
+        cell.imageView.image = [UIImage imageNamed:@"menu6.png"];
     }else if (indexPath.row == 3){
-        cell.imageView.image = [UIImage imageNamed:@"action.png"];
+        cell.imageView.image = [UIImage imageNamed:@"menu3.png"];
     }else if (indexPath.row == 4){
-        cell.imageView.image = [UIImage imageNamed:@"action.png"];
+        cell.imageView.image = [UIImage imageNamed:@"menu5.png"];
     }else if (indexPath.row == 5){
-        cell.imageView.image = [UIImage imageNamed:@"action.png"];
+        cell.imageView.image = [UIImage imageNamed:@"menu2.png"];
     }else if (indexPath.row == 6){
-        cell.imageView.image = [UIImage imageNamed:@"action.png"];
-    }else if (indexPath.row == 7){
-        cell.imageView.image = [UIImage imageNamed:@"action.png"];
+        cell.imageView.image = [UIImage imageNamed:@"menu7.png"];
     }
-    
     return cell;
 }
 
@@ -121,13 +118,13 @@
         self.slidingViewController.topViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"FavoriteNavigationController"];
     }
     else if ([menuItem isEqualToString:@"ゲーム"]) {
-        self.slidingViewController.topViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MonthNavigationController"];
+         [appCCloud openWebView];
     }
     else if ([menuItem isEqualToString:@"履歴"]) {
         self.slidingViewController.topViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"HistoryNavigationController"];
     }
     else if ([menuItem isEqualToString:@"おすすめアプリ"]) {
-        self.slidingViewController.topViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MonthNavigationController"];
+         [appCCloud openWebView];
     }
     [self.slidingViewController resetTopViewAnimated:YES];
     
