@@ -16,9 +16,11 @@
 #import "TOWebViewController.h"
 #import "History.h"
 #import "BDBSpinKitRefreshControl.h"
+#import "Appirater.h"
 
 @interface NewViewController : UIViewController<ECSlidingViewControllerDelegate,UITableViewDataSource,UITableViewDelegate,BDBSpinKitRefreshControlDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *NewContent;
 @property (nonatomic, strong) METransitions *transitions;
+
 @end

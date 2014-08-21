@@ -135,6 +135,12 @@
                                 <action selector="menuButtonTapped:" destination="uRJ-hg-pFY" id="Kgv-nh-rXY"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="menu3.png" id="dME-Zy-4jn">
+                            <connections>
+                                <action selector="toFavorite:" destination="uRJ-hg-pFY" id="nVR-gI-Yvd"/>
+                                <segue destination="tOX-J4-cBo" kind="push" id="MVp-6r-FfE"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="NewContent" destination="YYm-Ra-cik" id="2kO-WV-XG4"/>
@@ -440,8 +446,72 @@
             </objects>
             <point key="canvasLocation" x="1006" y="2915"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="hGv-Ue-B6c">
+            <objects>
+                <navigationController storyboardIdentifier="NecoNavigationController" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oFz-pR-5ZG" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Bxt-jE-FKS">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.95686274510000002" green="0.96470588239999999" blue="0.97254901959999995" alpha="1" colorSpace="deviceRGB"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="pEb-kC-KF4" kind="relationship" relationship="rootViewController" id="sfZ-fO-39D"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="leU-D6-Aps" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="537" y="3689"/>
+        </scene>
+        <!--Neco View Controller - ねこばず-->
+        <scene sceneID="A5T-lk-dv3">
+            <objects>
+                <viewController id="pEb-kC-KF4" customClass="NecoViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="NAD-YN-rW2"/>
+                        <viewControllerLayoutGuide type="bottom" id="2B1-qg-S6P"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="V6C-DP-v8G">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="rgM-Nc-FHF">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="6IY-oC-BT0">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6IY-oC-BT0" id="r05-45-Bbs">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="ねこばず" id="xZu-i9-XdL">
+                        <barButtonItem key="backBarButtonItem" title="戻る" id="5Jt-O2-ZQq"/>
+                        <barButtonItem key="leftBarButtonItem" image="navmenu.png" id="xUf-ZU-4qk">
+                            <connections>
+                                <action selector="menuButtonTapped:" destination="pEb-kC-KF4" id="wfD-Ei-WVV"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="nekoTable" destination="rgM-Nc-FHF" id="TeL-R0-nD2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DOk-G8-nnz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1025" y="3689"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="menu3.png" width="30" height="30"/>
         <image name="navmenu.png" width="44" height="44"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -449,4 +519,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="MVp-6r-FfE"/>
+    </inferredMetricsTieBreakers>
 </document>

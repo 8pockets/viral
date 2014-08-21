@@ -33,6 +33,7 @@
     _transitions = [[METransitions alloc] init];
     return _transitions;
 }
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -47,7 +48,7 @@
     self.NewContent.dataSource = self;
     
     //ヘッダー画像
-    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"navtitle.png"]];
+    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newtitle.png"]];
     
     //カスタムセルの設定
     UINib *nib = [UINib nibWithNibName:@"CustomCell" bundle:nil];
@@ -256,7 +257,7 @@
     
     manager.responseSerializer = responseSerializer;
     
-    [manager GET:@"http://viral.8pockets.com/new.json"
+    [manager GET:@"http://necobuzz.com/new.json"
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              // 通信に成功した場合の処理
@@ -292,6 +293,9 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.refreshControl endRefreshing];
     });
+}
+- (IBAction)toFavorite:(id)sender {
+    [Appirater userDidSignificantEvent:YES];
 }
 
 @end

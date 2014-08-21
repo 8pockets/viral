@@ -39,6 +39,9 @@
     self.WeekContent.delegate = self;
     self.WeekContent.dataSource = self;
     
+    //ヘッダー画像
+    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"weektitle.png"]];
+    
     //カスタムセルの設定
     UINib *nib = [UINib nibWithNibName:@"WeekCell" bundle:nil];
     [self.WeekContent registerNib:nib forCellReuseIdentifier:@"WeekCell"];
@@ -197,7 +200,7 @@
     
     manager.responseSerializer = responseSerializer;
     
-    [manager GET:@"http://viral.8pockets.com/weekly.json"
+    [manager GET:@"http://necobuzz.com/weekly.json"
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              // 通信に成功した場合の処理

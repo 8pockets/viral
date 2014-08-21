@@ -49,10 +49,11 @@
 - (NSArray *)menuItems {
     if (_menuItems) return _menuItems;
     
-    _menuItems = @[@"新着", @"週間ランキング", @"月間ランキング", @"お気に入り", @"ゲーム", @"履歴", @"おすすめアプリ"];
+    _menuItems = @[@"新着", @"週間ランキング", @"月間ランキング", @"ねこばず", @"お気に入り", @"履歴", @"おすすめアプリ"];
     
     return _menuItems;
 }
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -86,9 +87,9 @@
     }else if (indexPath.row == 2){
         cell.imageView.image = [UIImage imageNamed:@"menu6.png"];
     }else if (indexPath.row == 3){
-        cell.imageView.image = [UIImage imageNamed:@"menu3.png"];
-    }else if (indexPath.row == 4){
         cell.imageView.image = [UIImage imageNamed:@"menu5.png"];
+    }else if (indexPath.row == 4){
+        cell.imageView.image = [UIImage imageNamed:@"menu3.png"];
     }else if (indexPath.row == 5){
         cell.imageView.image = [UIImage imageNamed:@"menu2.png"];
     }else if (indexPath.row == 6){
@@ -117,8 +118,8 @@
     else if ([menuItem isEqualToString:@"お気に入り"]) {
         self.slidingViewController.topViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"FavoriteNavigationController"];
     }
-    else if ([menuItem isEqualToString:@"ゲーム"]) {
-         [appCCloud openWebView];
+    else if ([menuItem isEqualToString:@"ねこばず"]) {
+        self.slidingViewController.topViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NecoNavigationController"];
     }
     else if ([menuItem isEqualToString:@"履歴"]) {
         self.slidingViewController.topViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"HistoryNavigationController"];

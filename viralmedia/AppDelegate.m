@@ -89,4 +89,5 @@
     [MagicalRecord cleanUp];
 }
 
+
 @end

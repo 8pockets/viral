@@ -7,10 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <GameFeatKit/GFController.h>
+#import <GameFeatKit/GFView.h>
+#import <GameFeatKit/GFController.h>
 #import "UIViewController+ECSlidingViewController.h"
 #import "appCCloud.h"
 
-@interface MenuViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface MenuViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIApplicationDelegate,GFViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *menutable;
 
+//クラスメソッド
++(void)onClickBtn;
 @end

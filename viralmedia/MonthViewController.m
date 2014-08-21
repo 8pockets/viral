@@ -39,6 +39,9 @@
     self.MonthContent.delegate = self;
     self.MonthContent.dataSource = self;
     
+    //ヘッダー画像
+    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"monthtitle.png"]];
+    
     //カスタムセルの設定
     UINib *nib = [UINib nibWithNibName:@"MonthCell" bundle:nil];
     [self.MonthContent registerNib:nib forCellReuseIdentifier:@"MonthCell"];
@@ -203,7 +206,7 @@
     
     manager.responseSerializer = responseSerializer;
     
-    [manager GET:@"http://viral.8pockets.com/monthly.json"
+    [manager GET:@"http://necobuzz.com/monthly.json"
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              // 通信に成功した場合の処理

@@ -50,6 +50,9 @@
     self.HistoryContent.delegate = self;
     self.HistoryContent.dataSource = self;
     
+    //ヘッダー画像
+    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"historytitle.png"]];
+    
     //カスタムセルの設定
     UINib *nib = [UINib nibWithNibName:@"CustomCell" bundle:nil];
     [self.HistoryContent registerNib:nib forCellReuseIdentifier:@"historyCell"];
