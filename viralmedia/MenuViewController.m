@@ -81,13 +81,13 @@
     cell.backgroundColor = [UIColor darkGrayColor];
 
     if (indexPath.row == 0) {
-        cell.imageView.image = [UIImage imageNamed:@"menu1.png"];
+        cell.imageView.image = [UIImage imageNamed:@"menu5.png"];
     }else if (indexPath.row == 1){
         cell.imageView.image = [UIImage imageNamed:@"menu4.png"];
     }else if (indexPath.row == 2){
         cell.imageView.image = [UIImage imageNamed:@"menu6.png"];
     }else if (indexPath.row == 3){
-        cell.imageView.image = [UIImage imageNamed:@"menu5.png"];
+        cell.imageView.image = [UIImage imageNamed:@"menu1.png"];
     }else if (indexPath.row == 4){
         cell.imageView.image = [UIImage imageNamed:@"menu3.png"];
     }else if (indexPath.row == 5){
