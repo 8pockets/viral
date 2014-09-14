@@ -160,6 +160,16 @@
     //カスタムセルなので、prepareforSegueは呼ばれない。
     CustomCellItems *selectitem = _items[indexPath.row];
     
+    //カスタムセルなので、prepareforSegueは呼ばれない。
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud setValue:[selectitem url] forKey:@"url"];
+    [ud setValue:[selectitem title] forKey:@"title"];
+    [ud setValue:[selectitem date] forKey:@"date"];
+    [ud setValue:[selectitem view] forKey:@"view"];
+    [ud setValue:[selectitem site] forKey:@"site"];
+    [ud setValue:[selectitem pageid] forKey:@"id"];
+    [ud synchronize];
+
     // MagicalRecordイニシャライズ
     [MagicalRecord setupCoreDataStack];
     // データの挿入
@@ -172,11 +182,6 @@
     cellRecord.created_at = [NSDate date];
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     
-
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    [ud setValue:[selectitem url] forKey:@"url"];
-    [ud setValue:[selectitem pageid] forKey:@"id"];
-    [ud synchronize];
     
     NSURL *url = [NSURL URLWithString:[selectitem url]];
     TOWebViewController *webViewController = [[TOWebViewController alloc] initWithURL:url];
